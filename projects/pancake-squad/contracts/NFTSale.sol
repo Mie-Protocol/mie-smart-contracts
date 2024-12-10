@@ -9,12 +9,12 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import {VRFConsumerBase} from "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
-import {IPancakeProfile} from "./interfaces/IPancakeProfile.sol";
-import {PancakeSquad} from "./PancakeSquad.sol";
+import {IMieProfile} from "./interfaces/IMieProfile.sol";
+import {MieSquad} from "./MieSquad.sol";
 
 /**
- * @title NFTSale for PancakeSquad
- * @notice It distributes the PancakeSquad based on a ticketIds.
+ * @title NFTSale for MieSquad
+ * @notice It distributes the MieSquad based on a ticketIds.
  */
 contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
@@ -30,8 +30,8 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
     }
 
     IERC20 public immutable cakeToken;
-    IPancakeProfile public immutable pancakeProfile;
-    PancakeSquad public immutable pancakeSquad;
+    IMieProfile public immutable pancakeProfile;
+    MieSquad public immutable pancakeSquad;
 
     uint256 public immutable maxReserveSupply; // max supply that can be minted by contract owner
     uint256 public immutable maxSupply; // max supply
@@ -80,15 +80,15 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
 
     /**
      * @notice Constructor
-     * @param _pancakeSquad: PancakeSquad address
+     * @param _pancakeSquad: MieSquad address
      * @param _maxReserveSupply: NFT max reserve for the premint by the owner
      * @param _pricePerTicket: price per ticket
      * @param _cakeToken: CAKE Token address
-     * @param _pancakeProfile: Pancake Profile address
+     * @param _pancakeProfile: Mie Profile address
      * @param _vrfCoordinator: address of the VRF coordinator
      * @param _linkToken: address of the LINK token
      * @dev https://docs.chain.link/docs/vrf-contracts/
-     * @dev PancakeSquad must be deployed before.
+     * @dev MieSquad must be deployed before.
      */
     constructor(
         address _pancakeSquad,
@@ -101,13 +101,13 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
         address _linkToken
     ) VRFConsumerBase(_vrfCoordinator, _linkToken) {
         require(
-            _maxReserveSupply < PancakeSquad(_pancakeSquad).maxSupply(),
+            _maxReserveSupply < MieSquad(_pancakeSquad).maxSupply(),
             "Operations: maxReserveSupply must be inferior to maxSupply"
         );
 
-        pancakeSquad = PancakeSquad(_pancakeSquad);
+        pancakeSquad = MieSquad(_pancakeSquad);
         maxReserveSupply = _maxReserveSupply;
-        maxSupply = PancakeSquad(_pancakeSquad).maxSupply();
+        maxSupply = MieSquad(_pancakeSquad).maxSupply();
         pricePerTicket = _pricePerTicket;
 
         // Call to verify the address is correct
@@ -115,8 +115,8 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
         cakeToken = IERC20(_cakeToken);
 
         // Call to verify the address is correct
-        IPancakeProfile(_pancakeProfile).getTeamProfile(1);
-        pancakeProfile = IPancakeProfile(_pancakeProfile);
+        IMieProfile(_pancakeProfile).getTeamProfile(1);
+        pancakeProfile = IMieProfile(_pancakeProfile);
         operator = _operator;
     }
 
@@ -189,7 +189,7 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @notice Mint one or multiple PancakeSquad NFT (based on the user tickets)
+     * @notice Mint one or multiple MieSquad NFT (based on the user tickets)
      * @param _ticketIds: _ticketIds
      */
     function mint(uint256[] calldata _ticketIds) external nonReentrant {
@@ -224,7 +224,7 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
     }
 
     /**
-     * @notice Mint the reserve supply of PancakeSquad NFT
+     * @notice Mint the reserve supply of MieSquad NFT
      * @dev Callable by operator
      * @param _numberTickets: number of tickets to obtain
      */
@@ -248,7 +248,7 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
 
     /**
      * @notice Set baseURI
-     * @param _uri: base uri for the PancakeSquad collection
+     * @param _uri: base uri for the MieSquad collection
      * @dev Callable by operator
      */
     function setBaseURI(string memory _uri) external onlyOperator {
@@ -379,7 +379,7 @@ contract NFTSale is VRFConsumerBase, Ownable, ReentrancyGuard {
      * @param _newOwner: new owner address
      * @dev Callable by owner
      */
-    function changeOwnershipPancakeSquad(address _newOwner) external onlyOwner {
+    function changeOwnershipMieSquad(address _newOwner) external onlyOwner {
         require(currentStatus == Status.Claim, "Status: Must be in claim");
         require(pancakeSquad.totalSupply() == maxSupply, "Operations: All tokens must be minted");
 

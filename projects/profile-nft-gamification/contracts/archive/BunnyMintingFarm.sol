@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
-import "../PancakeBunnies.sol";
+import "../MieBunnies.sol";
 
 contract BunnyMintingFarm is Ownable {
     using SafeMath for uint8;
@@ -14,7 +14,7 @@ contract BunnyMintingFarm is Ownable {
 
     using SafeBEP20 for IBEP20;
 
-    PancakeBunnies public pancakeBunnies;
+    MieBunnies public pancakeBunnies;
     IBEP20 public cakeToken;
 
     // Map if address can claim a NFT
@@ -68,7 +68,7 @@ contract BunnyMintingFarm is Ownable {
         string memory _ipfsHash,
         uint256 _endBlockNumber
     ) public {
-        pancakeBunnies = new PancakeBunnies(_baseURI);
+        pancakeBunnies = new MieBunnies(_baseURI);
         cakeToken = _cakeToken;
         totalSupplyDistributed = _totalSupplyDistributed;
         cakePerBurn = _cakePerBurn;
@@ -94,7 +94,7 @@ contract BunnyMintingFarm is Ownable {
     }
 
     /**
-     * @dev Mint NFTs from the PancakeBunnies contract.
+     * @dev Mint NFTs from the MieBunnies contract.
      * Users can specify what bunnyId they want to mint. Users can claim once.
      * There is a limit on how many are distributed. It requires CAKE balance to be >0.
      */
@@ -123,7 +123,7 @@ contract BunnyMintingFarm is Ownable {
     }
 
     /**
-     * @dev Burn NFT from the PancakeBunnies contract.
+     * @dev Burn NFT from the MieBunnies contract.
      * Users can burn their NFT to get a set number of CAKE.
      * There is a cap on how many can be distributed for free.
      */

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.4.18;
 
-contract WBNB {
-    string public name = "Wrapped BNB";
-    string public symbol = "WBNB";
+contract WETH {
+    string public name = "Wrapped ETHER";
+    string public symbol = "WETH";
     uint8 public decimals = 18;
 
     event Approval(address indexed src, address indexed guy, uint256 wad);
@@ -44,11 +44,7 @@ contract WBNB {
         return transferFrom(msg.sender, dst, wad);
     }
 
-    function transferFrom(
-        address src,
-        address dst,
-        uint256 wad
-    ) public returns (bool) {
+    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {
         require(balanceOf[src] >= wad);
 
         if (src != msg.sender && allowance[src][msg.sender] != uint256(-1)) {

@@ -413,7 +413,7 @@
     "name": "pancakeProfile",
     "outputs": [
       {
-        "internalType": "contract PancakeProfile",
+        "internalType": "contract MieProfile",
         "name": "",
         "type": "address"
       }

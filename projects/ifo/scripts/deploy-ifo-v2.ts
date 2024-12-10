@@ -17,7 +17,7 @@ const main = async () => {
     const ifoV2 = await IFOV2.deploy(
       config.LPToken[name],
       config.OfferingToken[name],
-      config.PancakeProfile[name],
+      config.MieProfile[name],
       config.StartBlock[name],
       config.EndBlock[name],
       config.AdminAddress[name]
@@ -35,7 +35,7 @@ const main = async () => {
     const ifoV2 = await IFOV2.deploy(
       config.LPToken[name],
       offeringToken.address,
-      config.PancakeProfile[name],
+      config.MieProfile[name],
       config.StartBlock[name],
       config.EndBlock[name],
       config.AdminAddress[name]

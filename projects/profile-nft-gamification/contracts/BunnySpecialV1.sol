@@ -7,7 +7,7 @@ import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
 import "./BunnyMintingStation.sol";
-import "./PancakeProfile.sol";
+import "./MieProfile.sol";
 
 /** @title BunnySpecialV1.
  * @notice It is a contract for users to mint exclusive NFTs
@@ -18,7 +18,7 @@ contract BunnySpecialV1 is Ownable {
     using SafeMath for uint256;
 
     BunnyMintingStation public bunnyMintingStation;
-    PancakeProfile public pancakeProfile;
+    MieProfile public pancakeProfile;
 
     IBEP20 public cakeToken;
 
@@ -54,7 +54,7 @@ contract BunnySpecialV1 is Ownable {
     constructor(
         BunnyMintingStation _bunnyMintingStation,
         IBEP20 _cakeToken,
-        PancakeProfile _pancakeProfile,
+        MieProfile _pancakeProfile,
         uint256 _maxViewLength
     ) public {
         bunnyMintingStation = _bunnyMintingStation;
@@ -133,12 +133,7 @@ contract BunnySpecialV1 is Ownable {
         cakeToken.safeTransfer(_msgSender(), _amount);
     }
 
-    function updateBunny(
-        uint8 _bunnyId,
-        uint256 _thresholdUser,
-        uint256 _cakeCost,
-        bool _isActive
-    ) external onlyOwner {
+    function updateBunny(uint8 _bunnyId, uint256 _thresholdUser, uint256 _cakeCost, bool _isActive) external onlyOwner {
         require(bunnyCharacteristics[_bunnyId].isCreated, "ERR_NOT_CREATED");
         bunnyCharacteristics[_bunnyId].thresholdUser = _thresholdUser;
         bunnyCharacteristics[_bunnyId].cakeCost = _cakeCost;
@@ -200,11 +195,7 @@ contract BunnySpecialV1 is Ownable {
      * @dev Check if user can claim.
      * If the address hadn't set up a profile, it will return an error.
      */
-    function _canClaim(
-        address _userAddress,
-        uint256 userId,
-        uint8 _bunnyId
-    ) internal view returns (bool) {
+    function _canClaim(address _userAddress, uint256 userId, uint8 _bunnyId) internal view returns (bool) {
         uint256 bunnyThreshold = bunnyCharacteristics[_bunnyId].thresholdUser;
         bool bunnyActive = bunnyCharacteristics[_bunnyId].isActive;
 

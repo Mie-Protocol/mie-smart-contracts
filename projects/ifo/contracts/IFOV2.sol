@@ -7,14 +7,14 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
-import "profile-nft-gamification/contracts/PancakeProfile.sol";
+import "profile-nft-gamification/contracts/MieProfile.sol";
 
 import "./interfaces/IIFOV2.sol";
 
 /**
  * @title IFOV2
  * @notice It is an upgrade of the original IFO model with 2 pools and
- * other PancakeProfile requirements.
+ * other MieProfile requirements.
  */
 contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
     using SafeMath for uint256;
@@ -26,8 +26,8 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
     // The offering token
     IERC20 public offeringToken;
 
-    // PancakeProfile
-    PancakeProfile public pancakeProfile;
+    // MieProfile
+    MieProfile public pancakeProfile;
 
     // Number of pools
     uint8 public constant numberPools = 2;
@@ -105,7 +105,7 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @dev It can only be called once.
      * @param _lpToken: the LP token used
      * @param _offeringToken: the token that is offered for the IFO
-     * @param _pancakeProfileAddress: the address of the PancakeProfile
+     * @param _pancakeProfileAddress: the address of the MieProfile
      * @param _startBlock: the start block for the IFO
      * @param _endBlock: the end block for the IFO
      * @param _adminAddress: the admin address for handling tokens
@@ -124,7 +124,7 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
 
         lpToken = IERC20(_lpToken);
         offeringToken = IERC20(_offeringToken);
-        pancakeProfile = PancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = MieProfile(_pancakeProfileAddress);
         startBlock = _startBlock;
         endBlock = _endBlock;
         transferOwnership(_adminAddress);
@@ -338,19 +338,9 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @return totalAmountPool: total amount pool deposited (in LP tokens)
      * @return sumTaxesOverflow: total taxes collected (starts at 0, increases with each harvest if overflow)
      */
-    function viewPoolInformation(uint256 _pid)
-        external
-        view
-        override
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            bool,
-            uint256,
-            uint256
-        )
-    {
+    function viewPoolInformation(
+        uint256 _pid
+    ) external view override returns (uint256, uint256, uint256, bool, uint256, uint256) {
         return (
             _poolInformation[_pid].raisingAmountPool,
             _poolInformation[_pid].offeringAmountPool,
@@ -382,12 +372,10 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @param _pids[]: array of pids
      * @return
      */
-    function viewUserAllocationPools(address _user, uint8[] calldata _pids)
-        external
-        view
-        override
-        returns (uint256[] memory)
-    {
+    function viewUserAllocationPools(
+        address _user,
+        uint8[] calldata _pids
+    ) external view override returns (uint256[] memory) {
         uint256[] memory allocationPools = new uint256[](_pids.length);
         for (uint8 i = 0; i < _pids.length; i++) {
             allocationPools[i] = _getUserAllocationPool(_user, _pids[i]);
@@ -400,12 +388,10 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @param _user: user address
      * @param _pids[]: array of pids
      */
-    function viewUserInfo(address _user, uint8[] calldata _pids)
-        external
-        view
-        override
-        returns (uint256[] memory, bool[] memory)
-    {
+    function viewUserInfo(
+        address _user,
+        uint8[] calldata _pids
+    ) external view override returns (uint256[] memory, bool[] memory) {
         uint256[] memory amountPools = new uint256[](_pids.length);
         bool[] memory statusPools = new bool[](_pids.length);
 
@@ -421,12 +407,10 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @param _user: user address
      * @param _pids: array of pids
      */
-    function viewUserOfferingAndRefundingAmountsForPools(address _user, uint8[] calldata _pids)
-        external
-        view
-        override
-        returns (uint256[3][] memory)
-    {
+    function viewUserOfferingAndRefundingAmountsForPools(
+        address _user,
+        uint8[] calldata _pids
+    ) external view override returns (uint256[3][] memory) {
         uint256[3][] memory amountPools = new uint256[3][](_pids.length);
 
         for (uint8 i = 0; i < _pids.length; i++) {
@@ -470,11 +454,10 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @dev 100,000,000,000 means 0.1 (10%) / 1 means 0.0000000000001 (0.0000001%) / 1,000,000,000,000 means 1 (100%)
      * @return It returns the tax percentage
      */
-    function _calculateTaxOverflow(uint256 _totalAmountPool, uint256 _raisingAmountPool)
-        internal
-        pure
-        returns (uint256)
-    {
+    function _calculateTaxOverflow(
+        uint256 _totalAmountPool,
+        uint256 _raisingAmountPool
+    ) internal pure returns (uint256) {
         uint256 ratioOverflow = _totalAmountPool.div(_raisingAmountPool);
 
         if (ratioOverflow >= 1500) {
@@ -501,15 +484,10 @@ contract IFOV2 is IIFOV2, ReentrancyGuard, Ownable {
      * @return {uint256, uint256, uint256} It returns the offering amount, the refunding amount (in LP tokens),
      * and the tax (if any, else 0)
      */
-    function _calculateOfferingAndRefundingAmountsPool(address _user, uint8 _pid)
-        internal
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256
-        )
-    {
+    function _calculateOfferingAndRefundingAmountsPool(
+        address _user,
+        uint8 _pid
+    ) internal view returns (uint256, uint256, uint256) {
         uint256 userOfferingAmount;
         uint256 userRefundingAmount;
         uint256 taxAmount;

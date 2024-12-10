@@ -525,7 +525,7 @@
     "name": "pancakeProfile",
     "outputs": [
       {
-        "internalType": "contract PancakeProfile",
+        "internalType": "contract MieProfile",
         "name": "",
         "type": "address"
       }
@@ -538,7 +538,7 @@
     "name": "pancakeSwapLottery",
     "outputs": [
       {
-        "internalType": "contract IPancakeSwapLottery",
+        "internalType": "contract IMieSwapLottery",
         "name": "",
         "type": "address"
       }

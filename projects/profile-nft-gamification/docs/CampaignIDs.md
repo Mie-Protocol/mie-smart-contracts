@@ -4,7 +4,7 @@
 
 Each of the three events to increase number of points for users or teams come with a `campaignId` parameter (uint256).
 
-Its purpose is to allow subgraph reconciliation with the actual meaning behind each event for point increases (from `PancakeProfile`) to display on the front end.
+Its purpose is to allow subgraph reconciliation with the actual meaning behind each event for point increases (from `MieProfile`) to display on the front end.
 
 Each `campaignId` has 4 components: prefix, code user, type, and YYMM.
 

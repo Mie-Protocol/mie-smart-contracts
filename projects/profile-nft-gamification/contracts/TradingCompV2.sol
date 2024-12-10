@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
-import "./interfaces/IPancakeProfile.sol";
+import "./interfaces/IMieProfile.sol";
 import "./BunnyMintingStation.sol";
 
 /** @title TradingCompV2.
@@ -22,7 +22,7 @@ contract TradingCompV2 is Ownable {
     IBEP20 public portoToken;
     IBEP20 public santosToken;
 
-    IPancakeProfile public pancakeProfile;
+    IMieProfile public pancakeProfile;
 
     uint256 public constant numberTeams = 3;
 
@@ -69,7 +69,7 @@ contract TradingCompV2 is Ownable {
 
     /**
      * @notice It initializes the contract.
-     * @param _pancakeProfileAddress: PancakeProfile address
+     * @param _pancakeProfileAddress: MieProfile address
      * @param _bunnyStationAddress: BunnyMintingStation address
      * @param _cakeTokenAddress: the address of the CAKE token
      * @param _lazioTokenAddress: the address of the LAZIO fan token
@@ -86,7 +86,7 @@ contract TradingCompV2 is Ownable {
         address _santosTokenAddress,
         uint256 _competitionId
     ) public {
-        pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = IMieProfile(_pancakeProfileAddress);
         bunnyMintingStation = BunnyMintingStation(_bunnyStationAddress);
         cakeToken = IBEP20(_cakeTokenAddress);
         lazioToken = IBEP20(_lazioTokenAddress);
@@ -135,7 +135,7 @@ contract TradingCompV2 is Ownable {
 
     /**
      * @notice It allows users to register for trading competition
-     * @dev Only callable if the user has an active PancakeProfile.
+     * @dev Only callable if the user has an active MieProfile.
      */
     function register() external {
         address senderAddress = _msgSender();
@@ -308,21 +308,9 @@ contract TradingCompV2 is Ownable {
      * @return userPointReward: the number of points to claim/claimed
      * @return canClaimNFT: whether the user gets/got a NFT
      */
-    function claimInformation(address _userAddress)
-        external
-        view
-        returns (
-            bool,
-            bool,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            bool
-        )
-    {
+    function claimInformation(
+        address _userAddress
+    ) external view returns (bool, bool, uint256, uint256, uint256, uint256, uint256, uint256, bool) {
         bool hasUserRegistered = userTradingStats[_userAddress].hasRegistered;
         if ((currentStatus != CompetitionStatus.Claiming) && (currentStatus != CompetitionStatus.Over)) {
             return (hasUserRegistered, false, 0, 0, 0, 0, 0, 0, false);

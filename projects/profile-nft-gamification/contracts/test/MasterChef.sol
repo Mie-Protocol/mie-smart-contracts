@@ -11,14 +11,14 @@ import "./SyrupBar.sol";
 // import "@nomiclabs/buidler/console.sol";
 
 interface IMigratorChef {
-    // Perform LP token migration from legacy PancakeSwap to CakeSwap.
+    // Perform LP token migration from legacy MieSwap to CakeSwap.
     // Take the current LP token address and return the new LP token address.
     // Migrator should have full access to the caller's LP token.
     // Return the new LP token address.
     //
-    // XXX Migrator must have allowance access to PancakeSwap LP tokens.
+    // XXX Migrator must have allowance access to MieSwap LP tokens.
     // CakeSwap must mint EXACTLY the same amount of CakeSwap LP tokens or
-    // else something bad will happen. Traditional PancakeSwap does not
+    // else something bad will happen. Traditional MieSwap does not
     // do that so be careful!
     function migrate(IERC20 token) external returns (IERC20);
 }
@@ -85,13 +85,7 @@ contract MasterChef is Ownable {
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
-    constructor(
-        CakeToken _cake,
-        SyrupBar _syrup,
-        address _devaddr,
-        uint256 _cakePerBlock,
-        uint256 _startBlock
-    ) public {
+    constructor(CakeToken _cake, SyrupBar _syrup, address _devaddr, uint256 _cakePerBlock, uint256 _startBlock) public {
         cake = _cake;
         syrup = _syrup;
         devaddr = _devaddr;
@@ -114,11 +108,7 @@ contract MasterChef is Ownable {
 
     // Add a new lp to the pool. Can only be called by the owner.
     // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
-    function add(
-        uint256 _allocPoint,
-        IERC20 _lpToken,
-        bool _withUpdate
-    ) public onlyOwner {
+    function add(uint256 _allocPoint, IERC20 _lpToken, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();
         }
@@ -131,11 +121,7 @@ contract MasterChef is Ownable {
     }
 
     // Update the given pool's CAKE allocation point. Can only be called by the owner.
-    function set(
-        uint256 _pid,
-        uint256 _allocPoint,
-        bool _withUpdate
-    ) public onlyOwner {
+    function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
             massUpdatePools();
         }

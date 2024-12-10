@@ -5,7 +5,7 @@ import { BN, constants, expectEvent, expectRevert, time } from "@openzeppelin/te
 
 const MockERC20 = artifacts.require("./utils/MockERC20.sol");
 const MockRandomNumberGenerator = artifacts.require("./utils/MockRandomNumberGenerator.sol");
-const PancakeSwapLottery = artifacts.require("./PancakeSwapLottery.sol");
+const MieSwapLottery = artifacts.require("./MieSwapLottery.sol");
 
 const PRICE_BNB = 400;
 
@@ -44,8 +44,8 @@ contract("Lottery V2", ([alice, bob, carol, david, erin, operator, treasury, inj
     // Deploy MockRandomNumberGenerator
     randomNumberGenerator = await MockRandomNumberGenerator.new({ from: alice });
 
-    // Deploy PancakeSwapLottery
-    lottery = await PancakeSwapLottery.new(mockCake.address, randomNumberGenerator.address, { from: alice });
+    // Deploy MieSwapLottery
+    lottery = await MieSwapLottery.new(mockCake.address, randomNumberGenerator.address, { from: alice });
 
     await randomNumberGenerator.setLotteryAddress(lottery.address, { from: alice });
   });

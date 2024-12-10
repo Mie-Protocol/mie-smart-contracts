@@ -15,7 +15,7 @@ const main = async () => {
   const BunnyFactoryV2 = await ethers.getContractFactory("BunnyFactoryV2");
 
   const bunnyFactory = await BunnyFactoryV2.deploy(
-    config.PancakeBunnies[currentNetwork],
+    config.MieBunnies[currentNetwork],
     config.CakeToken[currentNetwork],
     _tokenPrice,
     _ipfsHash,

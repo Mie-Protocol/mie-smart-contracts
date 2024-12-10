@@ -3,14 +3,14 @@ pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./utils/IFO.sol";
-import "./interfaces/IPancakeProfile.sol";
+import "./interfaces/IMieProfile.sol";
 
 /** @title PointCenterIFO.
  * @notice It is a contract for users to collect points
  * for IFOs they participated in.
  */
 contract PointCenterIFO is Ownable {
-    IPancakeProfile pancakeProfile;
+    IMieProfile pancakeProfile;
 
     uint256 public maxViewLength;
 
@@ -31,7 +31,7 @@ contract PointCenterIFO is Ownable {
     }
 
     constructor(address _pancakeProfileAddress, uint256 _maxViewLength) public {
-        pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = IMieProfile(_pancakeProfileAddress);
         maxViewLength = _maxViewLength;
     }
 
@@ -96,11 +96,10 @@ contract PointCenterIFO is Ownable {
         return status;
     }
 
-    function checkClaimStatuses(address _userAddress, address[] memory _contractAddresses)
-        external
-        view
-        returns (bool[] memory)
-    {
+    function checkClaimStatuses(
+        address _userAddress,
+        address[] memory _contractAddresses
+    ) external view returns (bool[] memory) {
         bool[] memory responses = new bool[](_contractAddresses.length);
 
         require(_contractAddresses.length <= maxViewLength, "Length must be <= maxViewLength");

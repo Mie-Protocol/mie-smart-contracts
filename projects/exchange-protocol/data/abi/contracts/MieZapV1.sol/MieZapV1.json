@@ -391,7 +391,7 @@
     "name": "pancakeRouter",
     "outputs": [
       {
-        "internalType": "contract IPancakeRouter02",
+        "internalType": "contract IMieRouter02",
         "name": "",
         "type": "address"
       }

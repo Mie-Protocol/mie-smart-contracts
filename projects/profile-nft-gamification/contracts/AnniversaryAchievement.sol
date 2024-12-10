@@ -2,14 +2,14 @@
 pragma solidity ^0.6.12;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {PancakeProfile} from "./PancakeProfile.sol";
+import {MieProfile} from "./MieProfile.sol";
 
 /**
  * @title AnniversaryAchievement.
  * @notice It is a contract to distribute points for 1st anniversary.
  */
 contract AnniversaryAchievement is Ownable {
-    PancakeProfile public pancakeProfile;
+    MieProfile public pancakeProfile;
 
     uint256 public campaignId;
     uint256 public numberPoints;
@@ -25,7 +25,7 @@ contract AnniversaryAchievement is Ownable {
 
     /**
      * @notice Constructor
-     * @param _pancakeProfile: Pancake Profile
+     * @param _pancakeProfile: Mie Profile
      * @param _numberPoints: number of points to give
      * @param _thresholdPoints: number of points required to claim
      * @param _campaignId: campaign id
@@ -38,7 +38,7 @@ contract AnniversaryAchievement is Ownable {
         uint256 _campaignId,
         uint256 _endBlock
     ) public {
-        pancakeProfile = PancakeProfile(_pancakeProfile);
+        pancakeProfile = MieProfile(_pancakeProfile);
         numberPoints = _numberPoints;
         thresholdPoints = _thresholdPoints;
         campaignId = _campaignId;

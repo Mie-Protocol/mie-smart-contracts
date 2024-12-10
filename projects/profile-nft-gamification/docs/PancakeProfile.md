@@ -1,8 +1,8 @@
-# PancakeProfile
+# MieProfile
 
-This document explains how the `PancakeProfile` contract works.
+This document explains how the `MieProfile` contract works.
 
-PancakeProfile inherits from [`AccessControl`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol) and [`ERC721Holder`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721Holder.sol) from OpenZeppelin. It also inherits from [`IERC721Receiver`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol) and [`Context`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol).
+MieProfile inherits from [`AccessControl`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol) and [`ERC721Holder`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721Holder.sol) from OpenZeppelin. It also inherits from [`IERC721Receiver`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/IERC721Receiver.sol) and [`Context`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol).
 
 ## 1. Variables
 
@@ -23,7 +23,7 @@ PancakeProfile inherits from [`AccessControl`](https://github.com/OpenZeppelin/o
 #### Bytes32 (roles)
 
 - `DEFAULT_ADMIN_ROLE`: it is the deployer of the contract and any individual
-- `NFT_ROLE`: used for NFT contracts that can be deposited to the PancakeProfile contract
+- `NFT_ROLE`: used for NFT contracts that can be deposited to the MieProfile contract
 - `POINT_ROLE`: used for addresses (EOA + contracts) that can increase the number of points
 - `SPECIAL_ROLE`: used for addresses (EOA + contracts) that can change a user's team
 

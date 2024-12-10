@@ -1,5 +1,6 @@
 import type { HardhatUserConfig, NetworkUserConfig } from "hardhat/types";
 import "@nomiclabs/hardhat-ethers";
+import '@nomiclabs/hardhat-etherscan'
 import "@nomiclabs/hardhat-web3";
 import "@nomiclabs/hardhat-truffle5";
 import "hardhat-abi-exporter";
@@ -8,14 +9,15 @@ import "solidity-coverage";
 import "dotenv/config";
 
 const bscTestnet: NetworkUserConfig = {
-  url: "https://data-seed-prebsc-1-s1.binance.org:8545/",
-  chainId: 97,
+  url: "https://saturn-rpc.swanchain.io/",
+  chainId: 2024,
   accounts: [process.env.KEY_TESTNET!],
 };
 
 const bscMainnet: NetworkUserConfig = {
-  url: "https://bsc-dataseed.binance.org/",
-  chainId: 56,
+  url: "https://saturn-rpc.swanchain.io/",
+  chainId: 2024,
+  // apiURL:"",
   accounts: [process.env.KEY_MAINNET!],
 };
 
@@ -23,8 +25,21 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {},
-    // testnet: bscTestnet,
+    testnet: bscTestnet,
     // mainnet: bscMainnet,
+  },
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY!,
+    customChains: [
+      {
+        network: "testnet",
+        chainId: 2024,
+        urls: {
+          apiURL: "https://saturn-explorer.swanchain.io/api",
+          browserURL: "https://saturn-explorer.swanchain.io"
+        }
+      }
+    ]
   },
   solidity: {
     compilers: [

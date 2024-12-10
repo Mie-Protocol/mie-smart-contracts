@@ -7,7 +7,7 @@ import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
 import "./BunnyMintingStation.sol";
-import "./PancakeProfile.sol";
+import "./MieProfile.sol";
 
 /** @title BunnySpecialV2.
  * @notice It is a contract for users to mint exclusive Easter
@@ -18,7 +18,7 @@ contract BunnySpecialV2 is Ownable {
     using SafeMath for uint256;
 
     BunnyMintingStation public bunnyMintingStation;
-    PancakeProfile public pancakeProfile;
+    MieProfile public pancakeProfile;
 
     IBEP20 public cakeToken;
 
@@ -47,7 +47,7 @@ contract BunnySpecialV2 is Ownable {
     constructor(
         BunnyMintingStation _bunnyMintingStation,
         IBEP20 _cakeToken,
-        PancakeProfile _pancakeProfile,
+        MieProfile _pancakeProfile,
         uint256 _thresholdUser,
         uint256 _endBlock
     ) public {
@@ -97,11 +97,7 @@ contract BunnySpecialV2 is Ownable {
      * @notice Add/modify bunnyId for a teamId and metadata
      * @dev Only callable by owner.
      */
-    function addBunny(
-        uint8 _bunnyId,
-        uint256 _teamId,
-        string calldata _tokenURI
-    ) external onlyOwner {
+    function addBunny(uint8 _bunnyId, uint256 _teamId, string calldata _tokenURI) external onlyOwner {
         require(_bunnyId >= previousNumberBunnyIds, "ERR_ID_LOW_2");
 
         teamIdToBunnyId[_teamId] = _bunnyId;

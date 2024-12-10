@@ -1,14 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
-/** @title IPancakeProfile.
+/** @title IMieProfile.
  */
-interface IPancakeProfile {
-    function createProfile(
-        uint256 _teamId,
-        address _nftAddress,
-        uint256 _tokenId
-    ) external;
+interface IMieProfile {
+    function createProfile(uint256 _teamId, address _nftAddress, uint256 _tokenId) external;
 
     /**
      * @dev To pause user profile. It releases the NFT.
@@ -32,11 +28,7 @@ interface IPancakeProfile {
      * @dev To increase the number of points for a user.
      * Callable only by point admins
      */
-    function increaseUserPoints(
-        address _userAddress,
-        uint256 _numberPoints,
-        uint256 _campaignId
-    ) external;
+    function increaseUserPoints(address _userAddress, uint256 _numberPoints, uint256 _campaignId) external;
 
     /**
      * @dev To increase the number of points for a set of users.
@@ -53,11 +45,7 @@ interface IPancakeProfile {
      * Callable only by point admins
      */
 
-    function increaseTeamPoints(
-        uint256 _teamId,
-        uint256 _numberPoints,
-        uint256 _campaignId
-    ) external;
+    function increaseTeamPoints(uint256 _teamId, uint256 _numberPoints, uint256 _campaignId) external;
 
     /**
      * @dev To remove the number of points for a user.
@@ -128,17 +116,9 @@ interface IPancakeProfile {
     /**
      * @dev Check the user's profile for a given address
      */
-    function getUserProfile(address _userAddress)
-        external
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            address,
-            uint256,
-            bool
-        );
+    function getUserProfile(
+        address _userAddress
+    ) external view returns (uint256, uint256, uint256, address, uint256, bool);
 
     /**
      * @dev Check the user's status for a given address
@@ -148,14 +128,7 @@ interface IPancakeProfile {
     /**
      * @dev Check a team's profile
      */
-    function getTeamProfile(uint256 _teamId)
-        external
-        view
-        returns (
-            string memory,
-            string memory,
-            uint256,
-            uint256,
-            bool
-        );
+    function getTeamProfile(
+        uint256 _teamId
+    ) external view returns (string memory, string memory, uint256, uint256, bool);
 }

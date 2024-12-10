@@ -13,7 +13,7 @@ const main = async () => {
 
   const BunnyMintingStation = await ethers.getContractFactory("BunnyMintingStation");
 
-  const bunnyMintingStation = await BunnyMintingStation.deploy(config.PancakeBunnies[currentNetwork]);
+  const bunnyMintingStation = await BunnyMintingStation.deploy(config.MieBunnies[currentNetwork]);
 
   await bunnyMintingStation.deployed();
   console.log("BunnyMintingStation deployed to:", bunnyMintingStation.address);

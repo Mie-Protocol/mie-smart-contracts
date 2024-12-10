@@ -1,6 +1,6 @@
 # BunnyMintingStation
 
-This document explains how the `BunnyMintingStation` contract works. `BunnyMintingStation` is the owner of `PancakeBunnies` and can grant minter roles to other contracts who can mint new collectibles.
+This document explains how the `BunnyMintingStation` contract works. `BunnyMintingStation` is the owner of `MieBunnies` and can grant minter roles to other contracts who can mint new collectibles.
 
 `BunnyMintingStation` inherits from [`AccessControl`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/AccessControl.sol). Hence, it also inherits from [`Context`](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Context.sol).
 
@@ -23,5 +23,5 @@ Note: all functions that are not inherited are external.
 
 ### Admin functions
 
-- `setBunnyName(uint8 _bunnyId, string calldata _bunnyName)`: set the bunnyName in the `PancakeBunnies` contract
-- `changeOwnershipNFTContract(_newOwner)`: change the owner of `PancakeBunnies`
+- `setBunnyName(uint8 _bunnyId, string calldata _bunnyName)`: set the bunnyName in the `MieBunnies` contract
+- `changeOwnershipNFTContract(_newOwner)`: change the owner of `MieBunnies`

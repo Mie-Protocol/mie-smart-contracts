@@ -395,7 +395,7 @@
     "name": "pancakeProfile",
     "outputs": [
       {
-        "internalType": "contract IPancakeProfile",
+        "internalType": "contract IMieProfile",
         "name": "",
         "type": "address"
       }

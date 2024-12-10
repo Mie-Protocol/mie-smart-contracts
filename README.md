@@ -1,6 +1,6 @@
-# Pancake Contracts 🥞
+# Mie Contracts 🥞
 
-This repo contains all the contracts used in PancakeSwap. It is divided in independent projects where each of them contains its smart contracts, test environment and unique config files.
+This repo contains all the contracts used in MieSwap. It is divided in independent projects where each of them contains its smart contracts, test environment and unique config files.
 
 ## Existing projects
 
@@ -14,9 +14,9 @@ This repo contains all the contracts used in PancakeSwap. It is divided in indep
 | [IFO](./projects/ifo)                                                 | Initial Farm Offerings.                                                                                                    | 0.6.12                   |
 | [Lottery](./projects/lottery)                                         | V2 Lottery system for CAKE built using Chainlink's VRF.                                                                    | 0.8.4                    |
 | [NFT Markets](./projects/nft-markets)                                 | NFT marketplace for ERC721 tokens.                                                                                         | 0.8.4                    |
-| [Pancake Squad](./projects/pancake-squad)                             | Pancake Squad NFT collection.                                                                                              | 0.8.4                    |
+| [Mie Squad](./projects/pancake-squad)                             | Mie Squad NFT collection.                                                                                              | 0.8.4                    |
 | [Predictions](./projects/predictions)                                 | Prediction protocol contract built using Chainlink's oracle.                                                               | 0.6.12 (v1) / 0.8.4 (v2) |
-| [Profile, NFT, and Gamification](./projects/profile-nft-gamification) | Pancake Bunnies NFT, NFT factories, and Profile system.                                                                    | 0.6.12                   |
+| [Profile, NFT, and Gamification](./projects/profile-nft-gamification) | Mie Bunnies NFT, NFT factories, and Profile system.                                                                    | 0.6.12                   |
 | [SmartChef Factory](./projects/smartchef)                             | SmartChef (a.k.a. Syrup Pools) Factory                                                                                     | 0.6.12 (v1) / 0.8.4 (v2) |
 
 ## Create a new project

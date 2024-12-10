@@ -11,16 +11,16 @@ const main = async () => {
   const _numberCakeToReactivate = parseEther("2"); // 2 CAKE
   const _numberCakeToUpdate = parseEther("2"); // 2 CAKE
 
-  const PancakeProfile = await ethers.getContractFactory("PancakeProfile");
+  const MieProfile = await ethers.getContractFactory("MieProfile");
 
-  const pancakeProfile = await PancakeProfile.deploy(
+  const pancakeProfile = await MieProfile.deploy(
     config.CakeToken[currentNetwork],
     _numberCakeToReactivate,
     _numberCakeToRegister,
     _numberCakeToUpdate
   );
 
-  console.log("PancakeProfile deployed to:", pancakeProfile.address);
+  console.log("MieProfile deployed to:", pancakeProfile.address);
 
   await pancakeProfile.addTeam("Syrup Storm", "ipfs://QmamkDch4WBYGbchd6NV7MzPvG1NgWqWHNnYogdzreNtBn/syrup-storm.json");
   await pancakeProfile.addTeam(

@@ -638,7 +638,7 @@
       {
         "components": [
           {
-            "internalType": "enum PancakePredictionV3.Position",
+            "internalType": "enum MiePredictionV3.Position",
             "name": "position",
             "type": "uint8"
           },
@@ -653,7 +653,7 @@
             "type": "bool"
           }
         ],
-        "internalType": "struct PancakePredictionV3.BetInfo[]",
+        "internalType": "struct MiePredictionV3.BetInfo[]",
         "name": "",
         "type": "tuple[]"
       },
@@ -714,7 +714,7 @@
     "name": "ledger",
     "outputs": [
       {
-        "internalType": "enum PancakePredictionV3.Position",
+        "internalType": "enum MiePredictionV3.Position",
         "name": "position",
         "type": "uint8"
       },

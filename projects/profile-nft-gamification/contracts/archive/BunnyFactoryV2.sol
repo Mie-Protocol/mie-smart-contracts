@@ -7,13 +7,13 @@ import "bsc-library/contracts/IBEP20.sol";
 
 import "bsc-library/contracts/SafeBEP20.sol";
 
-import "../PancakeBunnies.sol";
+import "../MieBunnies.sol";
 
 contract BunnyFactoryV2 is Ownable {
     using SafeMath for uint256;
     using SafeBEP20 for IBEP20;
 
-    PancakeBunnies public pancakeBunnies;
+    MieBunnies public pancakeBunnies;
     IBEP20 public cakeToken;
 
     // end block number to get collectibles
@@ -48,7 +48,7 @@ contract BunnyFactoryV2 is Ownable {
      * is defined as totalSupplyDistributed.
      */
     constructor(
-        PancakeBunnies _pancakeBunnies,
+        MieBunnies _pancakeBunnies,
         IBEP20 _cakeToken,
         uint256 _tokenPrice,
         string memory _ipfsHash,
@@ -64,7 +64,7 @@ contract BunnyFactoryV2 is Ownable {
     }
 
     /**
-     * @dev Mint NFTs from the PancakeBunnies contract.
+     * @dev Mint NFTs from the MieBunnies contract.
      * Users can specify what bunnyId they want to mint. Users can claim once.
      * There is a limit on how many are distributed. It requires CAKE balance to be > 0.
      */

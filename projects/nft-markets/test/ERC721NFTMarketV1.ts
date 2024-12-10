@@ -4,12 +4,12 @@ import { assert } from "chai";
 import { BN, constants, expectEvent, expectRevert } from "@openzeppelin/test-helpers";
 
 const ERC721NFTMarketV1 = artifacts.require("./ERC721NFTMarketV1.sol");
-const PancakeBunniesWhitelistChecker = artifacts.require("./PancakeBunniesWhitelistChecker.sol");
+const MieBunniesWhitelistChecker = artifacts.require("./MieBunniesWhitelistChecker.sol");
 
 const MockERC20 = artifacts.require("./test/MockERC20.sol");
 const MockNFT = artifacts.require("./test/MockNFT.sol");
 const WBNB = artifacts.require("./test/WBNB.sol");
-const PancakeBunnies = artifacts.require(".test/PancakeBunnies.sol");
+const MieBunnies = artifacts.require(".test/MieBunnies.sol");
 
 contract(
   "ERC721 NFT Market V1",
@@ -43,11 +43,11 @@ contract(
         { from: owner }
       );
 
-      // Deploy PancakeBunnies (modified implementation in Solidity 0.8)
-      pancakeBunnies = await PancakeBunnies.new({ from: owner });
+      // Deploy MieBunnies (modified implementation in Solidity 0.8)
+      pancakeBunnies = await MieBunnies.new({ from: owner });
 
       // Deploy pancakeBunniesChecker
-      pancakeBunniesChecker = await PancakeBunniesWhitelistChecker.new(pancakeBunnies.address, { from: owner });
+      pancakeBunniesChecker = await MieBunniesWhitelistChecker.new(pancakeBunnies.address, { from: owner });
 
       // Deploy MockNFT 1
       mockNFT1 = await MockNFT.new("Mock NFT 1", "MN1", { from: owner });

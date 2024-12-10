@@ -1,7 +1,7 @@
 {
   "name": "pancake-squad",
   "version": "1.0.0",
-  "description": "PancakeSwap Squad NFT Collection",
+  "description": "MieSwap Squad NFT Collection",
   "main": "index.js",
   "license": "MIT",
   "private": true,

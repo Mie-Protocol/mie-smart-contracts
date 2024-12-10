@@ -24,8 +24,8 @@ const main = async () => {
     console.log("Compiled contracts...");
 
     // Deploy contracts.
-    const PancakePrediction = await ethers.getContractFactory("PancakePredictionV2");
-    const contract = await PancakePrediction.deploy(
+    const MiePrediction = await ethers.getContractFactory("MiePredictionV2");
+    const contract = await MiePrediction.deploy(
       config.Address.Oracle[networkName],
       config.Address.Admin[networkName],
       config.Address.Operator[networkName],

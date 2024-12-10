@@ -5,7 +5,7 @@ import { artifacts, contract, ethers } from "hardhat";
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
 const BunnyFactoryV2 = artifacts.require("./archive/BunnyFactoryV2.sol");
 const BunnyMintingFarm = artifacts.require("./BunnyMintingFarm.sol");
-const PancakeBunnies = artifacts.require("./PancakeBunnies.sol");
+const MieBunnies = artifacts.require("./MieBunnies.sol");
 
 contract("BunnyMintingFarm", ([alice, bob, carol, david, erin, frank, minterTester]) => {
   let mockCAKE,
@@ -24,7 +24,7 @@ contract("BunnyMintingFarm", ([alice, bob, carol, david, erin, frank, minterTest
     let _ipfsHash = "IPFSHASH/";
     let _endBlockTime = 150;
 
-    mockCAKE = await MockBEP20.new("Pancake Mock Token", "CAKE", 10000, {
+    mockCAKE = await MockBEP20.new("Mie Mock Token", "CAKE", 10000, {
       from: minterTester,
     });
 
@@ -40,7 +40,7 @@ contract("BunnyMintingFarm", ([alice, bob, carol, david, erin, frank, minterTest
 
     bunnyMintingFarmAddress = bunnyMintingFarm.address;
     pancakeBunniesAddress = await bunnyMintingFarm.pancakeBunnies();
-    pancakeBunnies = await PancakeBunnies.at(pancakeBunniesAddress);
+    pancakeBunnies = await MieBunnies.at(pancakeBunniesAddress);
   });
 
   // Check ticker, symbols, supply, and owner are correct
@@ -51,7 +51,7 @@ contract("BunnyMintingFarm", ([alice, bob, carol, david, erin, frank, minterTest
     });
     it("Name is correct", async () => {
       result = await pancakeBunnies.name();
-      assert.equal(result, "Pancake Bunnies");
+      assert.equal(result, "Mie Bunnies");
     });
     it("Total supply + number of NFT distributed is 0", async () => {
       result = await pancakeBunnies.totalSupply();
@@ -305,7 +305,7 @@ contract("BunnyMintingFarm", ([alice, bob, carol, david, erin, frank, minterTest
     });
 
     it("NFT contract owner changes correctly", async () => {
-      // Alice, the owner, calls to change the ownership of the PancakeBunnies contract to Bob
+      // Alice, the owner, calls to change the ownership of the MieBunnies contract to Bob
       result = await bunnyMintingFarm.changeOwnershipNFTContract(bob, {
         from: alice,
       });

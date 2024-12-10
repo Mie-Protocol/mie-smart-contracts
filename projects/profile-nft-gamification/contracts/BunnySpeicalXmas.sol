@@ -3,16 +3,16 @@ pragma solidity ^0.6.12;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
-import {IPancakeProfile} from "./interfaces/IPancakeProfile.sol";
+import {IMieProfile} from "./interfaces/IMieProfile.sol";
 import "./BunnyMintingStation.sol";
 
 contract BunnySpecialXmas is Ownable {
     BunnyMintingStation public immutable bunnyMintingStation;
-    IPancakeProfile public immutable pancakeProfile;
+    IMieProfile public immutable pancakeProfile;
 
     uint256 public endBlock; // End of the distribution
 
-    // Pancake Profile points threshold
+    // Mie Profile points threshold
     uint256 public pancakeProfileThresholdPoints;
 
     uint8 public immutable nftId; // Nft can be minted
@@ -22,13 +22,13 @@ contract BunnySpecialXmas is Ownable {
 
     event BunnyMint(address indexed to, uint256 indexed tokenId, uint8 indexed bunnyId);
     event NewEndBlock(uint256 endBlock);
-    event NewPancakeProfileThresholdPoints(uint256 thresholdPoints);
+    event NewMieProfileThresholdPoints(uint256 thresholdPoints);
     event NewTokenURI(string tokenURI);
 
     /**
      * @notice It initializes the contract.
      * @param _bunnyMintingStationAddress: BunnyMintingStation address
-     * @param _pancakeProfileAddress: PancakeProfile address
+     * @param _pancakeProfileAddress: MieProfile address
      * @param _pancakeProfileThresholdPoints: User points threshold for mint NFT
      * @param _nftId: Nft can be minted
      * @param _endBlock: the end of the block
@@ -41,7 +41,7 @@ contract BunnySpecialXmas is Ownable {
         uint256 _endBlock
     ) public {
         bunnyMintingStation = BunnyMintingStation(_bunnyMintingStationAddress);
-        pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = IMieProfile(_pancakeProfileAddress);
         pancakeProfileThresholdPoints = _pancakeProfileThresholdPoints;
         nftId = _nftId;
         endBlock = _endBlock;
@@ -62,7 +62,7 @@ contract BunnySpecialXmas is Ownable {
      */
     function updateThresholdPoints(uint256 _newThresholdPoints) external onlyOwner {
         pancakeProfileThresholdPoints = _newThresholdPoints;
-        emit NewPancakeProfileThresholdPoints(_newThresholdPoints);
+        emit NewMieProfileThresholdPoints(_newThresholdPoints);
     }
 
     /**

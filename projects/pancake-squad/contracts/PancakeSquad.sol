@@ -11,10 +11,10 @@ import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/
 import {Strings} from "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
- * @title Pancake Squad
- * @notice PancakeSwap NFT collection
+ * @title Mie Squad
+ * @notice MieSwap NFT collection
  */
-contract PancakeSquad is ERC721Enumerable, Ownable {
+contract MieSquad is ERC721Enumerable, Ownable {
     using SafeERC20 for IERC20;
     using Strings for uint256;
 
@@ -33,11 +33,7 @@ contract PancakeSquad is ERC721Enumerable, Ownable {
      * @param _symbol: NFT symbol
      * @param _maxSupply: NFT max totalSupply
      */
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        uint256 _maxSupply
-    ) ERC721(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, uint256 _maxSupply) ERC721(_name, _symbol) {
         require((_maxSupply == 100) || (_maxSupply == 1000) || (_maxSupply == 10000), "Operations: Wrong max supply");
         maxSupply = _maxSupply;
     }

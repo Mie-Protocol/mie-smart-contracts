@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
-import "./interfaces/IPancakeProfile.sol";
+import "./interfaces/IMieProfile.sol";
 import "./BunnyMintingStation.sol";
 import "./TradingCompV2.sol";
 
@@ -23,7 +23,7 @@ contract TradingCompV2RewardDistribution is Ownable {
     IBEP20 public portoToken;
     IBEP20 public santosToken;
 
-    IPancakeProfile public pancakeProfile;
+    IMieProfile public pancakeProfile;
     TradingCompV2 public tradingCompV2;
 
     uint256 public constant numberTeams = 3;
@@ -67,7 +67,7 @@ contract TradingCompV2RewardDistribution is Ownable {
 
     /**
      * @notice It initializes the contract.
-     * @param _pancakeProfileAddress: PancakeProfile address
+     * @param _pancakeProfileAddress: MieProfile address
      * @param _bunnyStationAddress: BunnyMintingStation address
      * @param _cakeTokenAddress: the address of the CAKE token
      * @param _lazioTokenAddress: the address of the LAZIO fan token
@@ -84,7 +84,7 @@ contract TradingCompV2RewardDistribution is Ownable {
         address _santosTokenAddress,
         address _tradingCompV2Address
     ) public {
-        pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = IMieProfile(_pancakeProfileAddress);
         bunnyMintingStation = BunnyMintingStation(_bunnyStationAddress);
         cakeToken = IBEP20(_cakeTokenAddress);
         lazioToken = IBEP20(_lazioTokenAddress);
@@ -254,21 +254,9 @@ contract TradingCompV2RewardDistribution is Ownable {
      * @return userPointReward: the number of points to claim/claimed
      * @return canClaimNFT: whether the user gets/got a NFT
      */
-    function claimInformation(address _userAddress)
-        external
-        view
-        returns (
-            bool,
-            bool,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            bool
-        )
-    {
+    function claimInformation(
+        address _userAddress
+    ) external view returns (bool, bool, uint256, uint256, uint256, uint256, uint256, uint256, bool) {
         bool hasUserRegistered;
         bool hasUserClaimed;
         uint256 userRewardGroup;

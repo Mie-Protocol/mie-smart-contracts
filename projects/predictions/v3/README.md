@@ -1,8 +1,8 @@
-# Pancake Prediction With Chainlink Oracle
+# Mie Prediction With Chainlink Oracle
 
 ## Description
 
-Pancakeswap Prediction with Chainlink Oracle
+Mieswap Prediction with Chainlink Oracle
 
 ## Documentation
 

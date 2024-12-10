@@ -4,10 +4,10 @@ pragma solidity ^0.8.0;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 import {ICollectionWhitelistChecker} from "./interfaces/ICollectionWhitelistChecker.sol";
-import {IPancakeBunnies} from "./interfaces/IPancakeBunnies.sol";
+import {IMieBunnies} from "./interfaces/IMieBunnies.sol";
 
-contract PancakeBunniesWhitelistChecker is Ownable, ICollectionWhitelistChecker {
-    IPancakeBunnies public pancakeBunnies;
+contract MieBunniesWhitelistChecker is Ownable, ICollectionWhitelistChecker {
+    IMieBunnies public pancakeBunnies;
 
     mapping(uint8 => bool) public isBunnyIdRestricted;
 
@@ -16,10 +16,10 @@ contract PancakeBunniesWhitelistChecker is Ownable, ICollectionWhitelistChecker 
 
     /**
      * @notice Constructor
-     * @param _pancakeBunniesAddress: PancakeBunnies contract
+     * @param _pancakeBunniesAddress: MieBunnies contract
      */
     constructor(address _pancakeBunniesAddress) {
-        pancakeBunnies = IPancakeBunnies(_pancakeBunniesAddress);
+        pancakeBunnies = IMieBunnies(_pancakeBunniesAddress);
     }
 
     /**

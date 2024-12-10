@@ -2,7 +2,7 @@ import { artifacts, contract } from "hardhat";
 import { assert } from "chai";
 import { BN, constants, expectEvent, expectRevert, time, ether, balance } from "@openzeppelin/test-helpers";
 
-const PancakePredictionV2 = artifacts.require("PancakePredictionV2");
+const MiePredictionV2 = artifacts.require("MiePredictionV2");
 const Oracle = artifacts.require("MockAggregatorV3");
 
 const GAS_PRICE = 8000000000; // hardhat default
@@ -34,7 +34,7 @@ const assertBNArray = (arr1: any[], arr2: any | any[]) => {
 };
 
 contract(
-  "PancakePredictionV2",
+  "MiePredictionV2",
   ([operator, admin, owner, bullUser1, bullUser2, bullUser3, bearUser1, bearUser2, bearUser3]) => {
     let currentEpoch: any;
     let oracle: { address: any; updateAnswer: (arg0: number) => any };
@@ -47,7 +47,7 @@ contract(
     beforeEach(async () => {
       oracle = await Oracle.new(DECIMALS, INITIAL_PRICE);
 
-      prediction = await PancakePredictionV2.new(
+      prediction = await MiePredictionV2.new(
         oracle.address,
         admin,
         operator,

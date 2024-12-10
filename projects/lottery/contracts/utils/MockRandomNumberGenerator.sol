@@ -3,7 +3,7 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interfaces/IRandomNumberGenerator.sol";
-import "../interfaces/IPancakeSwapLottery.sol";
+import "../interfaces/IMieSwapLottery.sol";
 
 contract MockRandomNumberGenerator is IRandomNumberGenerator, Ownable {
     address public pancakeSwapLottery;
@@ -18,15 +18,15 @@ contract MockRandomNumberGenerator is IRandomNumberGenerator, Ownable {
     constructor() {}
 
     /**
-     * @notice Set the address for the PancakeSwapLottery
-     * @param _pancakeSwapLottery: address of the PancakeSwap lottery
+     * @notice Set the address for the MieSwapLottery
+     * @param _pancakeSwapLottery: address of the MieSwap lottery
      */
     function setLotteryAddress(address _pancakeSwapLottery) external onlyOwner {
         pancakeSwapLottery = _pancakeSwapLottery;
     }
 
     /**
-     * @notice Set the address for the PancakeSwapLottery
+     * @notice Set the address for the MieSwapLottery
      * @param _nextRandomResult: next random result
      */
     function setNextRandomResult(uint256 _nextRandomResult) external onlyOwner {
@@ -35,10 +35,10 @@ contract MockRandomNumberGenerator is IRandomNumberGenerator, Ownable {
 
     /**
      * @notice Request randomness from a user-provided seed
-     * @param _seed: seed provided by the PancakeSwap lottery
+     * @param _seed: seed provided by the MieSwap lottery
      */
     function getRandomNumber(uint256 _seed) external override {
-        require(msg.sender == pancakeSwapLottery, "Only PancakeSwapLottery");
+        require(msg.sender == pancakeSwapLottery, "Only MieSwapLottery");
         fulfillRandomness(0, nextRandomResult);
     }
 
@@ -46,7 +46,7 @@ contract MockRandomNumberGenerator is IRandomNumberGenerator, Ownable {
      * @notice Change latest lotteryId to currentLotteryId
      */
     function changeLatestLotteryId() external {
-        latestLotteryId = IPancakeSwapLottery(pancakeSwapLottery).viewCurrentLotteryId();
+        latestLotteryId = IMieSwapLottery(pancakeSwapLottery).viewCurrentLotteryId();
     }
 
     /**

@@ -1,7 +1,7 @@
 {
   "name": "predictions",
   "version": "1.0.1",
-  "description": "Pancake prediction product built on ChainLink",
+  "description": "Mie prediction product built on ChainLink",
   "main": "index.js",
   "license": "MIT",
   "private": true,

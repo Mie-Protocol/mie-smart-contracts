@@ -19,7 +19,7 @@ const main = async () => {
     }
   }
 
-  if (!config.PancakeRouter[networkName] || config.PancakeRouter[networkName] === ethers.constants.AddressZero) {
+  if (!config.MieRouter[networkName] || config.MieRouter[networkName] === ethers.constants.AddressZero) {
     throw new Error("Missing router address, refer to README 'Deployment' section");
   }
 
@@ -29,20 +29,20 @@ const main = async () => {
 
   console.log("Deploying to network:", networkName);
 
-  // Deploy PancakeZapV1
-  console.log("Deploying PancakeZap V1..");
+  // Deploy MieZapV1
+  console.log("Deploying MieZap V1..");
 
-  const PancakeZapV1 = await ethers.getContractFactory("PancakeZapV1");
+  const MieZapV1 = await ethers.getContractFactory("MieZapV1");
 
-  const pancakeZap = await PancakeZapV1.deploy(
+  const pancakeZap = await MieZapV1.deploy(
     config.WBNB[networkName],
-    config.PancakeRouter[networkName],
+    config.MieRouter[networkName],
     config.MaxZapReverseRatio[networkName]
   );
 
   await pancakeZap.deployed();
 
-  console.log("PancakeZap V1 deployed to:", pancakeZap.address);
+  console.log("MieZap V1 deployed to:", pancakeZap.address);
 };
 
 main()

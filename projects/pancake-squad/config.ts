@@ -1,8 +1,8 @@
 export default {
   ERC721: {
     Name: {
-      mainnet: "Pancake Squad",
-      testnet: "Pancake Squad",
+      mainnet: "Mie Squad",
+      testnet: "Mie Squad",
     },
     Symbol: {
       mainnet: "PS",
@@ -23,7 +23,7 @@ export default {
     mainnet: "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
     testnet: "0xa35062141Fa33BCA92Ce69FeD37D0E8908868AAe",
   },
-  PancakeProfile: {
+  MieProfile: {
     mainnet: "0xDf4dBf6536201370F95e06A0F8a7a70fE40E388a",
     testnet: "0x4B683C7E13B6d5D7fd1FeA9530F451954c1A7c8A",
   },

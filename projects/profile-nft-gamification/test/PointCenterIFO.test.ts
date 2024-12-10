@@ -8,7 +8,7 @@ import { gasToBNB, gasToUSD } from "./helpers/GasCalculation";
 const MockBunnies = artifacts.require("./utils/MockBunnies.sol");
 const IFO = artifacts.require("./interfaces/IFO.sol");
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
-const PancakeProfile = artifacts.require("./PancakeProfile.sol");
+const MieProfile = artifacts.require("./MieProfile.sol");
 const PointCenterIFO = artifacts.require("./PointCenterIFO.sol");
 
 contract("IFO Point logic", ([alice, bob, carol, david, erin, frank]) => {
@@ -43,8 +43,8 @@ contract("IFO Point logic", ([alice, bob, carol, david, erin, frank]) => {
     // Deploy Mock Bunnies
     mockBunnies = await MockBunnies.new({ from: alice });
 
-    // Deploy Pancake Profile
-    pancakeProfile = await PancakeProfile.new(
+    // Deploy Mie Profile
+    pancakeProfile = await MieProfile.new(
       mockCake.address,
       _numberCakeToReactivate,
       _numberCakeToRegister,
@@ -99,7 +99,7 @@ contract("IFO Point logic", ([alice, bob, carol, david, erin, frank]) => {
       assert.equal(String(await mockCake.totalSupply()), String(parseEther("50")));
     });
 
-    it("PancakeProfile is correct", async () => {
+    it("MieProfile is correct", async () => {
       assert.equal(await pancakeProfile.cakeToken(), mockCake.address);
       assert.equal(String(await pancakeProfile.numberCakeToReactivate()), String(_numberCakeToReactivate));
       assert.equal(String(await pancakeProfile.numberCakeToRegister()), String(_numberCakeToRegister));
@@ -153,7 +153,7 @@ contract("IFO Point logic", ([alice, bob, carol, david, erin, frank]) => {
           from: thisUser,
         });
 
-        // Bob approves CAKE to be spent by PancakeProfile
+        // Bob approves CAKE to be spent by MieProfile
         await mockCake.approve(pancakeProfile.address, "10000000000000000000", {
           from: thisUser,
         });

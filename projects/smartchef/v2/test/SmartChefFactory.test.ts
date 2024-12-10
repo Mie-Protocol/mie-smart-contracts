@@ -7,7 +7,7 @@ const SmartChefFactory = artifacts.require("./SmartChefFactory");
 const SmartChefInitializable = artifacts.require("./SmartChefInitializable");
 const MockERC20 = artifacts.require("./libs/MockERC20");
 const MockERC721 = artifacts.require("./test/MockERC721");
-const PancakeProfile = artifacts.require("./test/MockPancakeProfile");
+const MieProfile = artifacts.require("./test/MockMieProfile");
 
 contract("Smart Chef Factory", ([alice, bob, carol, david, erin, ...accounts]) => {
   let blockNumber;
@@ -18,7 +18,7 @@ contract("Smart Chef Factory", ([alice, bob, carol, david, erin, ...accounts]) =
   let rewardPerBlock = parseEther("10");
 
   // Contracts
-  let fakeCake, mockCAKE, mockPT, smartChef, smartChefFactory, mockPancakeBunnies, pancakeProfile;
+  let fakeCake, mockCAKE, mockPT, smartChef, smartChefFactory, mockMieBunnies, pancakeProfile;
 
   // Generic result variable
   let result: any;
@@ -41,14 +41,14 @@ contract("Smart Chef Factory", ([alice, bob, carol, david, erin, ...accounts]) =
 
     smartChefFactory = await SmartChefFactory.new({ from: alice });
 
-    // Pancake Bunnies / Profile setup
-    mockPancakeBunnies = await MockERC721.new("Pancake Bunnies", "PB", { from: alice });
-    pancakeProfile = await PancakeProfile.new(mockCAKE.address, parseEther("2"), parseEther("1"), parseEther("2"), {
+    // Mie Bunnies / Profile setup
+    mockMieBunnies = await MockERC721.new("Mie Bunnies", "PB", { from: alice });
+    pancakeProfile = await MieProfile.new(mockCAKE.address, parseEther("2"), parseEther("1"), parseEther("2"), {
       from: alice,
     });
 
     await pancakeProfile.addTeam("1st Team", "Be a Chef!", { from: alice });
-    await pancakeProfile.addNftAddress(mockPancakeBunnies.address, { from: alice });
+    await pancakeProfile.addNftAddress(mockMieBunnies.address, { from: alice });
   });
 
   describe("SMART CHEF #1 - NO POOL LIMIT", async () => {
@@ -95,10 +95,10 @@ contract("Smart Chef Factory", ([alice, bob, carol, david, erin, ...accounts]) =
         await mockCAKE.approve(smartChef.address, parseEther("1000"), {
           from: thisUser,
         });
-        await mockPancakeBunnies.mint({ from: thisUser });
-        await mockPancakeBunnies.setApprovalForAll(pancakeProfile.address, true, { from: thisUser });
+        await mockMieBunnies.mint({ from: thisUser });
+        await mockMieBunnies.setApprovalForAll(pancakeProfile.address, true, { from: thisUser });
         await mockCAKE.approve(pancakeProfile.address, constants.MAX_UINT256, { from: thisUser });
-        await pancakeProfile.createProfile("1", mockPancakeBunnies.address, i.toString(), { from: thisUser });
+        await pancakeProfile.createProfile("1", mockMieBunnies.address, i.toString(), { from: thisUser });
         result = await smartChef.deposit(parseEther("100"), { from: thisUser });
         expectEvent(result, "Deposit", { user: thisUser, amount: String(parseEther("100")) });
         assert.equal(String(await smartChef.pendingReward(thisUser)), "0");

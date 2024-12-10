@@ -12,7 +12,7 @@ const main = async () => {
     console.log("Compiled contracts");
 
     const IFODeployer = await ethers.getContractFactory("IFODeployer");
-    const ifoDeployer = await IFODeployer.deploy(config.PancakeProfile[name]);
+    const ifoDeployer = await IFODeployer.deploy(config.MieProfile[name]);
 
     await ifoDeployer.deployed();
     console.log("IFODeployer deployed to:", ifoDeployer.address);

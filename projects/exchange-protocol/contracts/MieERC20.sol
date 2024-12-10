@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity =0.5.16;
 
-import "./interfaces/IPancakeERC20.sol";
+import "./interfaces/IMieERC20.sol";
 import "./libraries/SafeMath.sol";
 
-contract PancakeERC20 is IPancakeERC20 {
+contract MieERC20 is IMieERC20 {
     using SafeMath for uint256;
 
-    string public constant name = "Pancake LPs";
-    string public constant symbol = "Cake-LP";
+    string public constant name = "Mie LPs";
+    string public constant symbol = "Mie-LP";
     uint8 public constant decimals = 18;
     uint256 public totalSupply;
     mapping(address => uint256) public balanceOf;
@@ -50,20 +50,12 @@ contract PancakeERC20 is IPancakeERC20 {
         emit Transfer(from, address(0), value);
     }
 
-    function _approve(
-        address owner,
-        address spender,
-        uint256 value
-    ) private {
+    function _approve(address owner, address spender, uint256 value) private {
         allowance[owner][spender] = value;
         emit Approval(owner, spender, value);
     }
 
-    function _transfer(
-        address from,
-        address to,
-        uint256 value
-    ) private {
+    function _transfer(address from, address to, uint256 value) private {
         balanceOf[from] = balanceOf[from].sub(value);
         balanceOf[to] = balanceOf[to].add(value);
         emit Transfer(from, to, value);
@@ -79,11 +71,7 @@ contract PancakeERC20 is IPancakeERC20 {
         return true;
     }
 
-    function transferFrom(
-        address from,
-        address to,
-        uint256 value
-    ) external returns (bool) {
+    function transferFrom(address from, address to, uint256 value) external returns (bool) {
         if (allowance[from][msg.sender] != uint256(-1)) {
             allowance[from][msg.sender] = allowance[from][msg.sender].sub(value);
         }
@@ -100,7 +88,7 @@ contract PancakeERC20 is IPancakeERC20 {
         bytes32 r,
         bytes32 s
     ) external {
-        require(deadline >= block.timestamp, "Pancake: EXPIRED");
+        require(deadline >= block.timestamp, "Mie: EXPIRED");
         bytes32 digest = keccak256(
             abi.encodePacked(
                 "\x19\x01",
@@ -109,7 +97,7 @@ contract PancakeERC20 is IPancakeERC20 {
             )
         );
         address recoveredAddress = ecrecover(digest, v, r, s);
-        require(recoveredAddress != address(0) && recoveredAddress == owner, "Pancake: INVALID_SIGNATURE");
+        require(recoveredAddress != address(0) && recoveredAddress == owner, "Mie: INVALID_SIGNATURE");
         _approve(owner, spender, value);
     }
 }

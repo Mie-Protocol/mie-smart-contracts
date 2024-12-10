@@ -7,7 +7,7 @@ const { gasToBNB, gasToUSD } = require("./helpers/GasCalculation");
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
 const MockBunnies = artifacts.require("./utils/MockBunnies.sol");
 const MockCats = artifacts.require("./utils/MockCats.sol");
-const PancakeProfile = artifacts.require("./PancakeProfile.sol");
+const MieProfile = artifacts.require("./MieProfile.sol");
 
 contract("User interactions", ([alice, bob, carol, david, erin, frank]) => {
   const _totalInitSupply = "50000000000000000000"; // 50 CAKE
@@ -26,7 +26,7 @@ contract("User interactions", ([alice, bob, carol, david, erin, frank]) => {
 
     mockBunnies = await MockBunnies.new({ from: alice });
 
-    pancakeProfile = await PancakeProfile.new(
+    pancakeProfile = await MieProfile.new(
       mockCake.address,
       _numberCakeToReactivate,
       _numberCakeToRegister,
@@ -57,7 +57,7 @@ contract("User interactions", ([alice, bob, carol, david, erin, frank]) => {
       assert.equal(await mockCake.totalSupply(), "50000000000000000000");
     });
 
-    it("Initial parameters are correct for PancakeProfile", async () => {
+    it("Initial parameters are correct for MieProfile", async () => {
       assert.equal(await pancakeProfile.cakeToken(), mockCake.address);
       assert.equal(await pancakeProfile.numberCakeToRegister(), _numberCakeToRegister);
       assert.equal(await pancakeProfile.numberCakeToUpdate(), _numberCakeToUpdate);
@@ -580,19 +580,19 @@ contract("User interactions", ([alice, bob, carol, david, erin, frank]) => {
         await mockCake.mintTokens("2000000000000000000", { from: erin });
       }
 
-      // Erin approves her NFT contract to be spent by PancakeProfile
+      // Erin approves her NFT contract to be spent by MieProfile
       await mockCats.approve(pancakeProfile.address, "0", {
         from: erin,
       });
 
-      // Erin approves the CAKE token to be spent by PancakeProfile
+      // Erin approves the CAKE token to be spent by MieProfile
       await mockCake.approve(
         pancakeProfile.address,
         "10000000000000000000", // 10 CAKE
         { from: erin }
       );
 
-      // Erin creates her Pancake profile
+      // Erin creates her Mie profile
       result = await pancakeProfile.createProfile("1", mockCats.address, "0", {
         from: erin,
       });
@@ -647,7 +647,7 @@ contract("User interactions", ([alice, bob, carol, david, erin, frank]) => {
       result = await pancakeProfile.getTeamProfile("1");
       assert.equal(result[2], "4");
 
-      // Erin approves her NFT contract to be spent by PancakeProfile
+      // Erin approves her NFT contract to be spent by MieProfile
       await mockBunnies.approve(pancakeProfile.address, "3", {
         from: erin,
       });

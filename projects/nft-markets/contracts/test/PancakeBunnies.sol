@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-/** @title PancakeBunnies.
- * @notice It is the contracts for PancakeSwap NFTs.
+/** @title MieBunnies.
+ * @notice It is the contracts for MieSwap NFTs.
  */
-contract PancakeBunnies is ERC721, Ownable {
+contract MieBunnies is ERC721, Ownable {
     using Counters for Counters.Counter;
 
     // Map the number of tokens per bunnyId
@@ -26,7 +26,7 @@ contract PancakeBunnies is ERC721, Ownable {
     // Map the bunnyName for a tokenId
     mapping(uint8 => string) private bunnyNames;
 
-    constructor() ERC721("Pancake Bunnies", "PB") {
+    constructor() ERC721("Mie Bunnies", "PB") {
         //
     }
 
@@ -55,11 +55,7 @@ contract PancakeBunnies is ERC721, Ownable {
     /**
      * @dev Mint NFTs. Only the owner can call it.
      */
-    function mint(
-        address _to,
-        string calldata _tokenURI,
-        uint8 _bunnyId
-    ) external onlyOwner returns (uint256) {
+    function mint(address _to, string calldata _tokenURI, uint8 _bunnyId) external onlyOwner returns (uint256) {
         uint256 newId = _tokenIds.current();
         _tokenIds.increment();
         bunnyIds[newId] = _bunnyId;

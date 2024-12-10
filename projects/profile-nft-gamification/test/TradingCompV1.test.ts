@@ -8,8 +8,8 @@ const BunnyFactoryV2 = artifacts.require("./old/BunnyFactoryV2.sol");
 const BunnyFactoryV3 = artifacts.require("./BunnyFactoryV3.sol");
 const BunnyMintingStation = artifacts.require("./BunnyMintingStation.sol");
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
-const PancakeBunnies = artifacts.require("./PancakeBunnies.sol");
-const PancakeProfile = artifacts.require("./PancakeProfile.sol");
+const MieBunnies = artifacts.require("./MieBunnies.sol");
+const MieProfile = artifacts.require("./MieProfile.sol");
 const TradingCompV1 = artifacts.require("./TradingCompV1.sol");
 
 contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry]) => {
@@ -35,7 +35,7 @@ contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry
       from: alice,
     });
 
-    pancakeBunnies = await PancakeBunnies.new("ipfs://", { from: alice });
+    pancakeBunnies = await MieBunnies.new("ipfs://", { from: alice });
 
     // Deploy V2
     bunnyFactoryV2 = await BunnyFactoryV2.new(
@@ -87,8 +87,8 @@ contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry
       from: alice,
     });
 
-    // Deploy Pancake Profile
-    pancakeProfile = await PancakeProfile.new(
+    // Deploy Mie Profile
+    pancakeProfile = await MieProfile.new(
       mockCake.address,
       _numberCakeToReactivate,
       _numberCakeToRegister,
@@ -114,8 +114,8 @@ contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry
 
   // Check ticker, symbols, supply, and owners are correct
   describe("Initial contract parameters for all contracts", async () => {
-    it("PancakeBunnies is correct", async () => {
-      assert.equal(await pancakeBunnies.name(), "Pancake Bunnies");
+    it("MieBunnies is correct", async () => {
+      assert.equal(await pancakeBunnies.name(), "Mie Bunnies");
       assert.equal(await pancakeBunnies.symbol(), "PB");
       assert.equal(await pancakeBunnies.balanceOf(alice), "1");
       assert.equal(await pancakeBunnies.totalSupply(), "1");
@@ -127,7 +127,7 @@ contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry
       assert.equal(await mockCake.symbol(), "CAKE");
     });
 
-    it("PancakeProfile is correct", async () => {
+    it("MieProfile is correct", async () => {
       assert.equal(await pancakeProfile.cakeToken(), mockCake.address);
 
       for (let role of [NFT_ROLE, POINT_ROLE]) {
@@ -200,7 +200,7 @@ contract("TradingCompV1", ([alice, bob, carol, david, erin, frank, george, harry
           from: thisUser,
         });
 
-        // User approves CAKE to be spent by PancakeProfile
+        // User approves CAKE to be spent by MieProfile
         await mockCake.approve(pancakeProfile.address, parseEther("5"), {
           from: thisUser,
         });

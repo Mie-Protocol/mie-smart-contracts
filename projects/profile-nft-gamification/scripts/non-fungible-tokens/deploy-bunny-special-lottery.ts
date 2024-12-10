@@ -24,7 +24,7 @@ const main = async () => {
   const bunnySpecialLottery = await BunnySpecialLottery.deploy(
     config.Lottery[currentNetwork],
     config.BunnyMintingStation[currentNetwork],
-    config.PancakeProfile[currentNetwork],
+    config.MieProfile[currentNetwork],
     _endBlock,
     _tokenURI1,
     _tokenURI2,

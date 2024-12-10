@@ -61,11 +61,11 @@ export default {
     mainnet: "0x9b872C05C38A3563393668839659bA336Cc969B2",
     testnet: "",
   },
-  PancakeBunnies: {
+  MieBunnies: {
     mainnet: "0xDf7952B35f24aCF7fC0487D01c8d5690a60DBa07",
     testnet: "0x60935F36e4631F73f0f407e68642144e07aC7f5E",
   },
-  PancakeProfile: {
+  MieProfile: {
     mainnet: "0xDf4dBf6536201370F95e06A0F8a7a70fE40E388a",
     testnet: "0x4B683C7E13B6d5D7fd1FeA9530F451954c1A7c8A",
   },

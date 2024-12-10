@@ -15,8 +15,8 @@ const main = async () => {
       throw new Error("Missing addresses for Cake token");
     }
 
-    if (config.PancakeProfile[networkName] === ethers.constants.AddressZero) {
-      throw new Error("Missing addresses for Pancake Profile");
+    if (config.MieProfile[networkName] === ethers.constants.AddressZero) {
+      throw new Error("Missing addresses for Mie Profile");
     }
 
     if (config.Chainlink.LinkToken[networkName] === ethers.constants.AddressZero) {
@@ -32,8 +32,8 @@ const main = async () => {
     console.log("Compiled contracts...");
 
     // Deploy contracts.
-    const PancakeSquad = await ethers.getContractFactory("PancakeSquad");
-    const pancakeSquad = await PancakeSquad.deploy(
+    const MieSquad = await ethers.getContractFactory("MieSquad");
+    const pancakeSquad = await MieSquad.deploy(
       config.ERC721.Name[networkName],
       config.ERC721.Symbol[networkName],
       config.ERC721.Supply.Total[networkName]
@@ -41,7 +41,7 @@ const main = async () => {
 
     // Wait for the contract to be deployed
     await pancakeSquad.deployed();
-    console.log(`PancakeSquad to ${pancakeSquad.address}`);
+    console.log(`MieSquad to ${pancakeSquad.address}`);
 
     const NFTSale = await ethers.getContractFactory("NFTSale");
 
@@ -50,7 +50,7 @@ const main = async () => {
       config.ERC721.Supply.Reserve[networkName],
       config.PricePerTicket[networkName],
       config.CakeToken[networkName],
-      config.PancakeProfile[networkName],
+      config.MieProfile[networkName],
       config.Operator[networkName],
       config.Chainlink.VRFCoordinator[networkName],
       config.Chainlink.LinkToken[networkName]
@@ -60,10 +60,10 @@ const main = async () => {
     await nftSale.deployed();
     console.log(`NFTSale to ${nftSale.address}`);
 
-    // Transfer ownership of PancakeSquad to NFTSale contract
+    // Transfer ownership of MieSquad to NFTSale contract
     let tx = await pancakeSquad.transferOwnership(nftSale.address);
     await tx.wait();
-    console.log(`Ownership of PancakeSquad transferred to ${nftSale.address}`);
+    console.log(`Ownership of MieSquad transferred to ${nftSale.address}`);
 
     // Set fee and key hash for VRF
     tx = await nftSale.setFeeAndKeyHash(config.Chainlink.Fee[networkName], config.Chainlink.KeyHash[networkName]);

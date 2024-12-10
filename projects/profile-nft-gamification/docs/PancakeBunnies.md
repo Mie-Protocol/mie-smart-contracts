@@ -1,6 +1,6 @@
-# PancakeBunnies (WIP)
+# MieBunnies (WIP)
 
-This document explains how the `PancakeBunnies` contract works.
+This document explains how the `MieBunnies` contract works.
 
 ## 1. Variables
 
@@ -14,7 +14,7 @@ This document explains how the `PancakeBunnies` contract works.
 #### String
 
 - `baseURI`: "ipfs://"
-- `name`: "Pancake Bunnies"
+- `name`: "Mie Bunnies"
 - `symbol`: "PB"
 
 ### Private variables

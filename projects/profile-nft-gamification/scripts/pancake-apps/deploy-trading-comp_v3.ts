@@ -9,7 +9,7 @@ const main = async () => {
   const TradingCompV3 = await ethers.getContractFactory("TradingCompV3");
 
   const tradingComp = await TradingCompV3.deploy(
-    config.PancakeProfile[currentNetwork],
+    config.MieProfile[currentNetwork],
     config.BunnyMintingStation[currentNetwork],
     config.CakeToken[currentNetwork],
     config.MoboxToken[currentNetwork],

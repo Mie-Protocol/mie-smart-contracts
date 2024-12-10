@@ -2,7 +2,7 @@ import { artifacts, contract } from "hardhat";
 import { assert } from "chai";
 import { BN, constants, expectEvent, expectRevert, time, ether, balance } from "@openzeppelin/test-helpers";
 
-const PancakePredictionV3 = artifacts.require("PancakePredictionV3");
+const MiePredictionV3 = artifacts.require("MiePredictionV3");
 const Oracle = artifacts.require("MockAggregatorV3");
 const MockERC20 = artifacts.require("./utils/MockERC20.sol");
 
@@ -35,7 +35,7 @@ const assertBNArray = (arr1: any[], arr2: any | any[]) => {
 };
 
 contract(
-  "PancakePredictionV3",
+  "MiePredictionV3",
   ([operator, admin, owner, bullUser1, bullUser2, bullUser3, bearUser1, bearUser2, bearUser3]) => {
     // mock cake total supply
     const _totalInitSupply = ether("10000000000");
@@ -62,7 +62,7 @@ contract(
 
       oracle = await Oracle.new(DECIMALS, INITIAL_PRICE);
 
-      prediction = await PancakePredictionV3.new(
+      prediction = await MiePredictionV3.new(
         mockCake.address,
         oracle.address,
         admin,

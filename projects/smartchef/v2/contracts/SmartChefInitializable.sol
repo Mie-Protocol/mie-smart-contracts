@@ -8,7 +8,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.
 import {IERC20Metadata} from "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import {IPancakeProfile} from "./interfaces/IPancakeProfile.sol";
+import {IMieProfile} from "./interfaces/IMieProfile.sol";
 
 contract SmartChefInitializable is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20Metadata;
@@ -40,13 +40,13 @@ contract SmartChefInitializable is Ownable, ReentrancyGuard {
     // Block numbers available for user limit (after start block)
     uint256 public numberBlocksForUserLimit;
 
-    // Pancake profile
-    IPancakeProfile public immutable pancakeProfile;
+    // Mie profile
+    IMieProfile public immutable pancakeProfile;
 
-    // Pancake Profile is requested
+    // Mie Profile is requested
     bool public pancakeProfileIsRequested;
 
-    // Pancake Profile points threshold
+    // Mie Profile points threshold
     uint256 public pancakeProfileThresholdPoints;
 
     // CAKE tokens created per block.
@@ -81,20 +81,16 @@ contract SmartChefInitializable is Ownable, ReentrancyGuard {
 
     /**
      * @notice Constructor
-     * @param _pancakeProfile: Pancake Profile address
-     * @param _pancakeProfileIsRequested: Pancake Profile is requested
-     * @param _pancakeProfileThresholdPoints: Pancake Profile need threshold points
+     * @param _pancakeProfile: Mie Profile address
+     * @param _pancakeProfileIsRequested: Mie Profile is requested
+     * @param _pancakeProfileThresholdPoints: Mie Profile need threshold points
      */
-    constructor(
-        address _pancakeProfile,
-        bool _pancakeProfileIsRequested,
-        uint256 _pancakeProfileThresholdPoints
-    ) {
+    constructor(address _pancakeProfile, bool _pancakeProfileIsRequested, uint256 _pancakeProfileThresholdPoints) {
         SMART_CHEF_FACTORY = msg.sender;
 
         // Call to verify the address is correct
-        IPancakeProfile(_pancakeProfile).getTeamProfile(1);
-        pancakeProfile = IPancakeProfile(_pancakeProfile);
+        IMieProfile(_pancakeProfile).getTeamProfile(1);
+        pancakeProfile = IMieProfile(_pancakeProfile);
 
         // if pancakeProfile is requested
         pancakeProfileIsRequested = _pancakeProfileIsRequested;
@@ -145,7 +141,7 @@ contract SmartChefInitializable is Ownable, ReentrancyGuard {
         uint256 decimalsRewardToken = uint256(rewardToken.decimals());
         require(decimalsRewardToken < 30, "Must be inferior to 30");
 
-        PRECISION_FACTOR = uint256(10**(uint256(30) - decimalsRewardToken));
+        PRECISION_FACTOR = uint256(10 ** (uint256(30) - decimalsRewardToken));
 
         // Set the lastRewardBlock as the startBlock
         lastRewardBlock = startBlock;
@@ -333,10 +329,10 @@ contract SmartChefInitializable is Ownable, ReentrancyGuard {
      * @param _isRequested: the profile is requested
      * @param _thresholdPoints: the threshold points
      */
-    function updateProfileAndThresholdPointsRequirement(bool _isRequested, uint256 _thresholdPoints)
-        external
-        onlyOwner
-    {
+    function updateProfileAndThresholdPointsRequirement(
+        bool _isRequested,
+        uint256 _thresholdPoints
+    ) external onlyOwner {
         require(_thresholdPoints >= 0, "Threshold points need to exceed 0");
         pancakeProfileIsRequested = _isRequested;
         pancakeProfileThresholdPoints = _thresholdPoints;

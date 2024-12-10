@@ -1,8 +1,8 @@
-# Pancake Cake Vault
+# Mie Cake Vault
 
 ## Description
 
-Pancakeswap Cake Vault for the CAKE token from the MasterChef.
+Mieswap Cake Vault for the CAKE token from the MasterChef.
 
 ## Deployment
 

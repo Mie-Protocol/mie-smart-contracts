@@ -12,7 +12,7 @@
         "type": "address"
       },
       {
-        "internalType": "contract PancakeProfile",
+        "internalType": "contract MieProfile",
         "name": "_pancakeProfile",
         "type": "address"
       },
@@ -360,7 +360,7 @@
     "name": "pancakeProfile",
     "outputs": [
       {
-        "internalType": "contract PancakeProfile",
+        "internalType": "contract MieProfile",
         "name": "",
         "type": "address"
       }

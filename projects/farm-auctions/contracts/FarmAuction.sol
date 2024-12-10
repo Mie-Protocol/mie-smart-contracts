@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /**
- * @title PancakeSwap Farms Auctions.
+ * @title MieSwap Farms Auctions.
  * @notice Auctions for new Farms, including multiplier.
  */
 contract FarmAuction is Ownable, ReentrancyGuard {
@@ -89,11 +89,7 @@ contract FarmAuction is Ownable, ReentrancyGuard {
      * @param _operatorAddress: address of the operator
      * @param _maxAuctionLength: max amount of blocks for an auction
      */
-    constructor(
-        address _cakeToken,
-        address _operatorAddress,
-        uint256 _maxAuctionLength
-    ) {
+    constructor(address _cakeToken, address _operatorAddress, uint256 _maxAuctionLength) {
         require(_maxAuctionLength > 0, "Auction: Length cannot be zero");
         require(_maxAuctionLength <= 86400, "Auction: Cannot be longer than three days (86,400 blocks)");
 
@@ -112,7 +108,7 @@ contract FarmAuction is Ownable, ReentrancyGuard {
         require(auctions[currentAuctionId].status == Status.Open, "Auction: Not in progress");
         require(block.number > auctions[currentAuctionId].startBlock, "Auction: Too early");
         require(block.number < auctions[currentAuctionId].endBlock, "Auction: Too late");
-        require(_amount % uint256(10**19) == uint256(0), "Bid: Incorrect amount");
+        require(_amount % uint256(10 ** 19) == uint256(0), "Bid: Incorrect amount");
 
         if (auctionBids[currentAuctionId][msg.sender].totalAmount == 0) {
             require(_amount >= auctions[currentAuctionId].initialBidAmount, "Bid: Incorrect initial bid amount");
@@ -217,7 +213,7 @@ contract FarmAuction is Ownable, ReentrancyGuard {
             "Auction: End block must be lower than Start block + Buffer"
         );
         require(_initialBidAmount > 0, "Auction: Initial bid amount cannot be zero");
-        require(_initialBidAmount % uint256(10**19) == uint256(0), "Auction: Incorrect initial bid amount");
+        require(_initialBidAmount % uint256(10 ** 19) == uint256(0), "Auction: Incorrect initial bid amount");
         require(_leaderboard > 0, "Auction: Leaderboard cannot be zero");
         require(bidders.length() > 0, "Auction: No whitelisted address");
 
@@ -431,16 +427,7 @@ contract FarmAuction is Ownable, ReentrancyGuard {
         address bidder,
         uint256 cursor,
         uint256 size
-    )
-        external
-        view
-        returns (
-            uint256[] memory,
-            uint256[] memory,
-            bool[] memory,
-            uint256
-        )
-    {
+    ) external view returns (uint256[] memory, uint256[] memory, bool[] memory, uint256) {
         uint256 length = size;
         if (length > _bidderAuctions[bidder].length - cursor) {
             length = _bidderAuctions[bidder].length - cursor;

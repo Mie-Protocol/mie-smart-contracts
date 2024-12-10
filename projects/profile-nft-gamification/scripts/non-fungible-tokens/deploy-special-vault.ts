@@ -17,7 +17,7 @@ const main = async () => {
   const bunnySpecialCakeVault = await BunnySpecialCakeVault.deploy(
     config.CakeVault[currentNetwork],
     config.BunnyMintingStation[currentNetwork],
-    config.PancakeProfile[currentNetwork],
+    config.MieProfile[currentNetwork],
     _endBlock,
     _thresholdTimeStamp,
     _numberPoints,

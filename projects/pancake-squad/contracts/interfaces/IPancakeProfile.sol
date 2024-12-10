@@ -2,14 +2,10 @@
 pragma solidity ^0.8.0;
 
 /**
- * @title IPancakeProfile
+ * @title IMieProfile
  */
-interface IPancakeProfile {
-    function createProfile(
-        uint256 _teamId,
-        address _nftAddress,
-        uint256 _tokenId
-    ) external;
+interface IMieProfile {
+    function createProfile(uint256 _teamId, address _nftAddress, uint256 _tokenId) external;
 
     function pauseProfile() external;
 
@@ -17,11 +13,7 @@ interface IPancakeProfile {
 
     function reactivateProfile(address _nftAddress, uint256 _tokenId) external;
 
-    function increaseUserPoints(
-        address _userAddress,
-        uint256 _numberPoints,
-        uint256 _campaignId
-    ) external;
+    function increaseUserPoints(address _userAddress, uint256 _numberPoints, uint256 _campaignId) external;
 
     function increaseUserPointsMultiple(
         address[] calldata _userAddresses,
@@ -29,11 +21,7 @@ interface IPancakeProfile {
         uint256 _campaignId
     ) external;
 
-    function increaseTeamPoints(
-        uint256 _teamId,
-        uint256 _numberPoints,
-        uint256 _campaignId
-    ) external;
+    function increaseTeamPoints(uint256 _teamId, uint256 _numberPoints, uint256 _campaignId) external;
 
     function removeUserPoints(address _userAddress, uint256 _numberPoints) external;
 
@@ -53,11 +41,7 @@ interface IPancakeProfile {
 
     function makeTeamNotJoinable(uint256 _teamId) external;
 
-    function renameTeam(
-        uint256 _teamId,
-        string calldata _teamName,
-        string calldata _teamDescription
-    ) external;
+    function renameTeam(uint256 _teamId, string calldata _teamName, string calldata _teamDescription) external;
 
     function updateNumberCake(
         uint256 _newNumberCakeToReactivate,
@@ -65,28 +49,13 @@ interface IPancakeProfile {
         uint256 _newNumberCakeToUpdate
     ) external;
 
-    function getUserProfile(address _userAddress)
-        external
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            address,
-            uint256,
-            bool
-        );
+    function getUserProfile(
+        address _userAddress
+    ) external view returns (uint256, uint256, uint256, address, uint256, bool);
 
     function getUserStatus(address _userAddress) external view returns (bool);
 
-    function getTeamProfile(uint256 _teamId)
-        external
-        view
-        returns (
-            string memory,
-            string memory,
-            uint256,
-            uint256,
-            bool
-        );
+    function getTeamProfile(
+        uint256 _teamId
+    ) external view returns (string memory, string memory, uint256, uint256, bool);
 }

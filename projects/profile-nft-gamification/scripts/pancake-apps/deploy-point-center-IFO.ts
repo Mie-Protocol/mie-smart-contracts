@@ -10,7 +10,7 @@ const main = async () => {
 
   const PointCenterIFO = await ethers.getContractFactory("PointCenterIFO");
 
-  const pointCenterIFO = await PointCenterIFO.deploy(config.PancakeProfile[currentNetwork], _maxViewLength);
+  const pointCenterIFO = await PointCenterIFO.deploy(config.MieProfile[currentNetwork], _maxViewLength);
 
   await pointCenterIFO.deployed();
   console.log("PointCenterIFO deployed to:", pointCenterIFO.address);

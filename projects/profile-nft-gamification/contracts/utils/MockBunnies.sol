@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 /** @title MockBunnies.
  * @notice It is a mock contract to replace
- * PancakeBunnies in tests.
+ * MieBunnies in tests.
  */
 contract MockBunnies is ERC721, Ownable {
     using Counters for Counters.Counter;

@@ -1,13 +1,13 @@
 {
   "name": "pancake-contracts",
   "version": "1.0.0",
-  "description": "Pancake contracts",
+  "description": "Mie contracts",
   "private": true,
   "workspaces": [
     "projects/**"
   ],
   "repository": "https://github.com/pancakeswap/pancake-contracts",
-  "author": "PancakeSwap",
+  "author": "MieSwap",
   "license": "MIT",
   "scripts": {
     "format:check": "prettier --check 'projects/**/*.{js,ts,sol}'",

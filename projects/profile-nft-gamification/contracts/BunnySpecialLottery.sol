@@ -3,16 +3,16 @@ pragma solidity ^0.6.12;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-import {IPancakeSwapLottery} from "lottery/contracts/interfaces/IPancakeSwapLottery.sol";
+import {IMieSwapLottery} from "lottery/contracts/interfaces/IMieSwapLottery.sol";
 import {BunnyMintingStation} from "./BunnyMintingStation.sol";
-import {PancakeProfile} from "./PancakeProfile.sol";
+import {MieProfile} from "./MieProfile.sol";
 
 contract BunnySpecialLottery is Ownable {
     /*** Contracts ***/
 
-    IPancakeSwapLottery public pancakeSwapLottery;
+    IMieSwapLottery public pancakeSwapLottery;
     BunnyMintingStation public bunnyMintingStation;
-    PancakeProfile public pancakeProfile;
+    MieProfile public pancakeProfile;
 
     /*** Storage ***/
 
@@ -59,9 +59,9 @@ contract BunnySpecialLottery is Ownable {
         uint256 _startLotteryRound,
         uint256 _finalLotteryRound
     ) public {
-        pancakeSwapLottery = IPancakeSwapLottery(_pancakeSwapLotteryAddress);
+        pancakeSwapLottery = IMieSwapLottery(_pancakeSwapLotteryAddress);
         bunnyMintingStation = BunnyMintingStation(_bunnyMintingStationAddress);
-        pancakeProfile = PancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = MieProfile(_pancakeProfileAddress);
 
         endBlock = _endBlock;
 
@@ -94,11 +94,7 @@ contract BunnySpecialLottery is Ownable {
      * @param _lotteryId See _canClaim documentation
      * @param _cursor See _canClaim documentation
      */
-    function mintNFT(
-        uint8 _bunnyId,
-        uint256 _lotteryId,
-        uint256 _cursor
-    ) external validNftId(_bunnyId) {
+    function mintNFT(uint8 _bunnyId, uint256 _lotteryId, uint256 _cursor) external validNftId(_bunnyId) {
         require(_canClaim(msg.sender, _bunnyId, _lotteryId, _cursor), "User: Not eligible");
 
         hasClaimed[msg.sender][_bunnyId] = true;
@@ -106,7 +102,7 @@ contract BunnySpecialLottery is Ownable {
         // Mint collectible and send it to the user.
         uint256 tokenId = bunnyMintingStation.mintCollectible(msg.sender, tokenURIs[_bunnyId], _bunnyId);
 
-        // Increase point on PancakeSwap profile, for a given campaignId.
+        // Increase point on MieSwap profile, for a given campaignId.
         pancakeProfile.increaseUserPoints(msg.sender, numberPoints[_bunnyId], campaignIds[_bunnyId]);
 
         emit BunnyMint(msg.sender, tokenId, _bunnyId);
@@ -127,11 +123,7 @@ contract BunnySpecialLottery is Ownable {
      * @param _lotteryId See _canClaim documentation
      * @param _cursor See _canClaim documentation
      */
-    function canClaimNft2(
-        address _userAddress,
-        uint256 _lotteryId,
-        uint256 _cursor
-    ) external view returns (bool) {
+    function canClaimNft2(address _userAddress, uint256 _lotteryId, uint256 _cursor) external view returns (bool) {
         return _canClaim(_userAddress, nftId2, _lotteryId, _cursor);
     }
 
@@ -155,7 +147,7 @@ contract BunnySpecialLottery is Ownable {
     }
 
     /**
-     * @notice Change the campaignId for PancakeSwap Profile.
+     * @notice Change the campaignId for MieSwap Profile.
      * @dev Only callable by owner.
      */
     function changeCampaignId(uint8 _bunnyId, uint256 _campaignId) external onlyOwner validNftId(_bunnyId) {
@@ -164,7 +156,7 @@ contract BunnySpecialLottery is Ownable {
     }
 
     /**
-     * @notice Change the number of points for PancakeSwap Profile.
+     * @notice Change the number of points for MieSwap Profile.
      * @dev Only callable by owner.
      */
     function changeNumberPoints(uint8 _bunnyId, uint256 _numberPoints) external onlyOwner validNftId(_bunnyId) {

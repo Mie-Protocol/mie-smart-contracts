@@ -14,7 +14,7 @@ contract("FarmAuction", ([owner, operator, alice, bob, carol, david, eve]) => {
   let startBlock, endBlock;
 
   before(async () => {
-    mockCake = await MockCake.new("PancakeSwap", "Cake", parseEther("100000"), { from: owner });
+    mockCake = await MockCake.new("MieSwap", "Cake", parseEther("100000"), { from: owner });
     fakeCake = await MockCake.new("FakeSwap", "Cake", parseEther("100000"), { from: owner });
     farmAuction = await FarmAuction.new(mockCake.address, operator, "28800", {
       from: owner,

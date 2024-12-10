@@ -3,15 +3,15 @@ import { constants, expectEvent, expectRevert } from "@openzeppelin/test-helpers
 
 import { artifacts, contract, ethers } from "hardhat";
 
-const PancakeBunnies = artifacts.require("./PancakeBunnies.sol");
+const MieBunnies = artifacts.require("./MieBunnies.sol");
 
-contract("PancakeBunnies", ([alice, bob, carol]) => {
+contract("MieBunnies", ([alice, bob, carol]) => {
   let pancakeBunnies;
   let result;
 
   before(async () => {
     const _testBaseURI = "ipfs://ipfs/";
-    pancakeBunnies = await PancakeBunnies.new(_testBaseURI, { from: alice });
+    pancakeBunnies = await MieBunnies.new(_testBaseURI, { from: alice });
   });
 
   // Check ticker and symbols are correct
@@ -22,7 +22,7 @@ contract("PancakeBunnies", ([alice, bob, carol]) => {
     });
     it("Name is correct", async () => {
       result = await pancakeBunnies.name();
-      assert.equal(result, "Pancake Bunnies");
+      assert.equal(result, "Mie Bunnies");
     });
     it("Total supply is 0", async () => {
       result = await pancakeBunnies.totalSupply();

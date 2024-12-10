@@ -13,8 +13,8 @@ const BunnySpecialV2 = artifacts.require("./BunnySpecialV2.sol");
 const BunnyCakeVault = artifacts.require("./BunnySpecialCakeVault.sol");
 const BunnyPrediction = artifacts.require("./BunnySpecialPrediction.sol");
 const BunnyMintingStation = artifacts.require("./BunnyMintingStation.sol");
-const PancakeBunnies = artifacts.require("./PancakeBunnies.sol");
-const PancakeProfile = artifacts.require("./PancakeProfile.sol");
+const MieBunnies = artifacts.require("./MieBunnies.sol");
+const MieProfile = artifacts.require("./MieProfile.sol");
 const BunnySpecialLottery = artifacts.require("./BunnySpecialLottery.sol");
 const BunnySpecialAdmin = artifacts.require("./BunnySpecialAdmin.sol");
 
@@ -29,7 +29,7 @@ const BnbPricePrediction = artifacts.require("predictions/contracts/BnbPricePred
 const MockAggregatorV3 = artifacts.require("test/MockAggregatorV3.sol");
 
 // LOTTERY
-const MockPancakeSwapLottery = artifacts.require("test/MockPancakeSwapLottery.sol");
+const MockMieSwapLottery = artifacts.require("test/MockMieSwapLottery.sol");
 
 contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) => {
   let anniversaryAchievement;
@@ -72,16 +72,16 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
   const _startBlockNumberV2 = "1";
   const _startBlockNumberV3 = "1000";
 
-  // PancakeSwap Profile related.
+  // MieSwap Profile related.
   const _numberPoints = 100;
   const _campaignId = "123456789";
 
   before(async () => {
-    mockCAKE = await MockBEP20.new("Pancake Mock Token", "CAKE", 0, {
+    mockCAKE = await MockBEP20.new("Mie Mock Token", "CAKE", 0, {
       from: alice,
     });
 
-    pancakeBunnies = await PancakeBunnies.new("ipfs://", { from: alice });
+    pancakeBunnies = await MieBunnies.new("ipfs://", { from: alice });
 
     // Deploy V2
     bunnyFactoryV2 = await BunnyFactoryV2.new(
@@ -162,13 +162,13 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
 
     // LOTTERY
     mockBunnies = await MockBunnies.new({ from: alice });
-    pancakeSwapLottery = await MockPancakeSwapLottery.new(cake.address);
+    pancakeSwapLottery = await MockMieSwapLottery.new(cake.address);
   });
 
   describe("All new contracts are deployed correctly", async () => {
     it("Symbol and names are correct", async () => {
       assert.equal(await pancakeBunnies.symbol(), "PB");
-      assert.equal(await pancakeBunnies.name(), "Pancake Bunnies");
+      assert.equal(await pancakeBunnies.name(), "Mie Bunnies");
     });
 
     it("Owners & roles are ok", async () => {
@@ -362,7 +362,7 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
       );
     });
 
-    it("Alice can transfer ownership of PancakeBunnies", async () => {
+    it("Alice can transfer ownership of MieBunnies", async () => {
       result = await bunnyMintingStation.changeOwnershipNFTContract(alice, {
         from: alice,
       });
@@ -402,12 +402,12 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
     });
   });
   describe("BunnySpecialV1", async () => {
-    it("Alice deploys PancakeProfile and Bob creates a profile", async () => {
+    it("Alice deploys MieProfile and Bob creates a profile", async () => {
       const _numberCakeToReactivate = parseEther("2"); // 2 CAKE
       const _numberCakeToRegister = parseEther("1"); // 1 CAKE
       const _numberCakeToUpdate = parseEther("2"); // 2 CAKE
 
-      pancakeProfile = await PancakeProfile.new(
+      pancakeProfile = await MieProfile.new(
         mockCAKE.address,
         _numberCakeToReactivate,
         _numberCakeToRegister,
@@ -415,7 +415,7 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
         { from: alice }
       );
 
-      // PancakeSwap Profile roles.
+      // MieSwap Profile roles.
       POINT_ROLE = await pancakeProfile.POINT_ROLE();
 
       await pancakeProfile.addTeam("The Testers", "ipfs://hash/team1.json", {
@@ -1405,7 +1405,7 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
       const _numberCakeToRegister = parseEther("1"); // 1 CAKE
       const _numberCakeToUpdate = parseEther("2"); // 2 CAKE
 
-      pancakeProfile = await PancakeProfile.new(
+      pancakeProfile = await MieProfile.new(
         mockCAKE.address,
         _numberCakeToReactivate,
         _numberCakeToRegister,
@@ -1413,7 +1413,7 @@ contract("BunnyFactoryV3 and above", ([alice, bob, carol, david, eve, frank]) =>
         { from: alice }
       );
 
-      // PancakeSwap Profile roles.
+      // MieSwap Profile roles.
       POINT_ROLE = await pancakeProfile.POINT_ROLE();
       await pancakeProfile.addTeam("The Testers", "ipfs://hash/team1.json", {
         from: alice,

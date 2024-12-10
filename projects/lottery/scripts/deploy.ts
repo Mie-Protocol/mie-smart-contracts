@@ -4,7 +4,7 @@ import config from "../config";
 const currentNetwork = network.name;
 
 const main = async (withVRFOnTestnet: boolean = true) => {
-  const PancakeSwapLottery = await ethers.getContractFactory("PancakeSwapLottery");
+  const MieSwapLottery = await ethers.getContractFactory("MieSwapLottery");
 
   if (currentNetwork == "testnet") {
     let randomNumberGenerator;
@@ -35,13 +35,13 @@ const main = async (withVRFOnTestnet: boolean = true) => {
       console.log("RandomNumberGenerator deployed to:", randomNumberGenerator.address);
     }
 
-    const pancakeSwapLottery = await PancakeSwapLottery.deploy(
+    const pancakeSwapLottery = await MieSwapLottery.deploy(
       config.CakeToken[currentNetwork],
       randomNumberGenerator.address
     );
 
     await pancakeSwapLottery.deployed();
-    console.log("PancakeSwapLottery deployed to:", pancakeSwapLottery.address);
+    console.log("MieSwapLottery deployed to:", pancakeSwapLottery.address);
 
     // Set lottery address
     await randomNumberGenerator.setLotteryAddress(pancakeSwapLottery.address);
@@ -61,13 +61,13 @@ const main = async (withVRFOnTestnet: boolean = true) => {
     // Set key hash
     await randomNumberGenerator.setKeyHash(config.KeyHash[currentNetwork]);
 
-    const pancakeSwapLottery = await PancakeSwapLottery.deploy(
+    const pancakeSwapLottery = await MieSwapLottery.deploy(
       config.CakeToken[currentNetwork],
       randomNumberGenerator.address
     );
 
     await pancakeSwapLottery.deployed();
-    console.log("PancakeSwapLottery deployed to:", pancakeSwapLottery.address);
+    console.log("MieSwapLottery deployed to:", pancakeSwapLottery.address);
 
     // Set lottery address
     await randomNumberGenerator.setLotteryAddress(pancakeSwapLottery.address);

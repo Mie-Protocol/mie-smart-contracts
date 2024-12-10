@@ -8,7 +8,7 @@ const MockAdmin = artifacts.require("./utils/MockAdmin.sol");
 const MockBunnies = artifacts.require("./utils/MockBunnies.sol");
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
 const MockCats = artifacts.require("./utils/MockCats.sol");
-const PancakeProfile = artifacts.require("./PancakeProfile.sol");
+const MieProfile = artifacts.require("./MieProfile.sol");
 
 contract("Admin and point system logic", ([alice, bob, carol, david, erin, frank]) => {
   const _totalInitSupply = "50000000000000000000"; // 50 CAKE
@@ -27,7 +27,7 @@ contract("Admin and point system logic", ([alice, bob, carol, david, erin, frank
 
     mockBunnies = await MockBunnies.new({ from: alice });
 
-    pancakeProfile = await PancakeProfile.new(
+    pancakeProfile = await MieProfile.new(
       mockCake.address,
       _numberCakeToReactivate,
       _numberCakeToRegister,
@@ -56,7 +56,7 @@ contract("Admin and point system logic", ([alice, bob, carol, david, erin, frank
       assert.equal(await mockCake.balanceOf(alice), "50000000000000000000");
       assert.equal(await mockCake.totalSupply(), "50000000000000000000");
     });
-    it("PancakeProfile is correct", async () => {
+    it("MieProfile is correct", async () => {
       assert.equal(await pancakeProfile.cakeToken(), mockCake.address);
       assert.equal(await pancakeProfile.numberCakeToReactivate(), _numberCakeToReactivate);
       assert.equal(await pancakeProfile.numberCakeToRegister(), _numberCakeToRegister);
@@ -138,7 +138,7 @@ contract("Admin and point system logic", ([alice, bob, carol, david, erin, frank
       );
     });
 
-    it("Alice adds MockAdmin as point admin in PancakeProfile", async () => {
+    it("Alice adds MockAdmin as point admin in MieProfile", async () => {
       result = await pancakeProfile.grantRole(POINT_ROLE, mockAdmin.address, {
         from: alice,
       });

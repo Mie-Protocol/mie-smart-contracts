@@ -4,13 +4,13 @@ import { assert, expect } from "chai";
 import { BN, constants, expectEvent, expectRevert, time } from "@openzeppelin/test-helpers";
 
 const MockERC20 = artifacts.require("./utils/MockERC20.sol");
-const PancakeFactory = artifacts.require("./PancakeFactory.sol");
-const PancakePair = artifacts.require("./PancakePair.sol");
-const PancakeRouter = artifacts.require("./PancakeRouter.sol");
-const PancakeZapV1 = artifacts.require("./PancakeZapV1.sol");
+const MieFactory = artifacts.require("./MieFactory.sol");
+const MiePair = artifacts.require("./MiePair.sol");
+const MieRouter = artifacts.require("./MieRouter.sol");
+const MieZapV1 = artifacts.require("./MieZapV1.sol");
 const WBNB = artifacts.require("./WBNB.sol");
 
-contract("PancakeZapV1", ([alice, bob, carol, david, erin]) => {
+contract("MieZapV1", ([alice, bob, carol, david, erin]) => {
   let maxZapReverseRatio;
   let pairAB;
   let pairBC;
@@ -24,17 +24,17 @@ contract("PancakeZapV1", ([alice, bob, carol, david, erin]) => {
 
   before(async () => {
     // Deploy Factory
-    pancakeFactory = await PancakeFactory.new(alice, { from: alice });
+    pancakeFactory = await MieFactory.new(alice, { from: alice });
 
     // Deploy Wrapped BNB
     wrappedBNB = await WBNB.new({ from: alice });
 
     // Deploy Router
-    pancakeRouter = await PancakeRouter.new(pancakeFactory.address, wrappedBNB.address, { from: alice });
+    pancakeRouter = await MieRouter.new(pancakeFactory.address, wrappedBNB.address, { from: alice });
 
     // Deploy ZapV1
     maxZapReverseRatio = 100; // 1%
-    pancakeZap = await PancakeZapV1.new(wrappedBNB.address, pancakeRouter.address, maxZapReverseRatio, { from: alice });
+    pancakeZap = await MieZapV1.new(wrappedBNB.address, pancakeRouter.address, maxZapReverseRatio, { from: alice });
 
     // Deploy ERC20s
     tokenA = await MockERC20.new("Token A", "TA", parseEther("10000000"), { from: alice });
@@ -42,13 +42,13 @@ contract("PancakeZapV1", ([alice, bob, carol, david, erin]) => {
 
     // Create 3 LP tokens
     let result = await pancakeFactory.createPair(tokenA.address, wrappedBNB.address, { from: alice });
-    pairAB = await PancakePair.at(result.logs[0].args[2]);
+    pairAB = await MiePair.at(result.logs[0].args[2]);
 
     result = await pancakeFactory.createPair(wrappedBNB.address, tokenC.address, { from: alice });
-    pairBC = await PancakePair.at(result.logs[0].args[2]);
+    pairBC = await MiePair.at(result.logs[0].args[2]);
 
     result = await pancakeFactory.createPair(tokenA.address, tokenC.address, { from: alice });
-    pairAC = await PancakePair.at(result.logs[0].args[2]);
+    pairAC = await MiePair.at(result.logs[0].args[2]);
 
     assert.equal(String(await pairAB.totalSupply()), parseEther("0").toString());
     assert.equal(String(await pairBC.totalSupply()), parseEther("0").toString());
@@ -101,7 +101,7 @@ contract("PancakeZapV1", ([alice, bob, carol, david, erin]) => {
     it("User adds liquidity to LP tokens", async function () {
       const deadline = new BN(await time.latest()).add(new BN("100"));
 
-      /* Add liquidity (Pancake Router)
+      /* Add liquidity (Mie Router)
        * address tokenB,
        * uint256 amountADesired,
        * uint256 amountBDesired,

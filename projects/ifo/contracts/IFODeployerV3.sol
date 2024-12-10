@@ -22,7 +22,7 @@ contract IFODeployerV3 is Ownable {
 
     /**
      * @notice Constructor
-     * @param _pancakeProfile: the address of the PancakeProfile
+     * @param _pancakeProfile: the address of the MieProfile
      */
     constructor(address _pancakeProfile) public {
         pancakeProfile = _pancakeProfile;

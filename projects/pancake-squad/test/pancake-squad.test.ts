@@ -6,13 +6,13 @@ import { parseEther } from "ethers/lib/utils";
 const NFTSale = artifacts.require("NFTSale");
 const MockVRFCoordinator = artifacts.require("./test/MockVRFCoordinator");
 
-const PancakeSquad = artifacts.require("PancakeSquad");
+const MieSquad = artifacts.require("MieSquad");
 const MockERC20 = artifacts.require("./test/MockERC20");
 const MockERC721 = artifacts.require("./test/MockERC721");
-const PancakeProfile = artifacts.require("./test/MockPancakeProfile");
+const MieProfile = artifacts.require("./test/MockMieProfile");
 
-contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) => {
-  let mockCake, fakeCake, mockPancakeBunnies, nftSale, pancakeProfile, pancakeSquad;
+contract("Mie Squad", ([owner, operator, alice, bob, carol, david, erin]) => {
+  let mockCake, fakeCake, mockMieBunnies, nftSale, pancakeProfile, pancakeSquad;
   let maxSupply;
   let maxReserveSupply;
   let mockURI;
@@ -28,25 +28,25 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
     let amount = parseEther("10000");
 
     // Token setup
-    mockCake = await MockERC20.new("PancakeSwap", "Cake", amount, { from: owner });
+    mockCake = await MockERC20.new("MieSwap", "Cake", amount, { from: owner });
     fakeCake = await MockERC20.new("FakeSwap", "Fake", amount, { from: owner });
     mockLink = await MockERC20.new("MockLink", "LINK", amount, { from: owner });
 
-    // Pancake Bunnies / Profile setup
-    mockPancakeBunnies = await MockERC721.new("Pancake Bunnies", "PB", { from: owner });
-    pancakeProfile = await PancakeProfile.new(mockCake.address, parseEther("2"), parseEther("1"), parseEther("2"), {
+    // Mie Bunnies / Profile setup
+    mockMieBunnies = await MockERC721.new("Mie Bunnies", "PB", { from: owner });
+    pancakeProfile = await MieProfile.new(mockCake.address, parseEther("2"), parseEther("1"), parseEther("2"), {
       from: owner,
     });
 
     await pancakeProfile.addTeam("1st Team", "Be a Chef!", { from: owner });
-    await pancakeProfile.addNftAddress(mockPancakeBunnies.address, { from: owner });
+    await pancakeProfile.addNftAddress(mockMieBunnies.address, { from: owner });
 
     maxSupply = "100";
     maxReserveSupply = "10";
     pricePerTicket = parseEther("1").toString(); // 1 CAKE
 
-    // Deploy PancakeSquad
-    pancakeSquad = await PancakeSquad.new("Pancake Squad", "PSQ", maxSupply, {
+    // Deploy MieSquad
+    pancakeSquad = await MieSquad.new("Mie Squad", "PSQ", maxSupply, {
       from: owner,
     });
 
@@ -70,19 +70,19 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
     let i = 0;
 
     for (let user of [alice, bob, carol, david]) {
-      await mockPancakeBunnies.mint({ from: user });
-      await mockPancakeBunnies.setApprovalForAll(pancakeProfile.address, true, { from: user });
+      await mockMieBunnies.mint({ from: user });
+      await mockMieBunnies.setApprovalForAll(pancakeProfile.address, true, { from: user });
       await mockCake.mintTokens(amount, { from: user });
       await mockCake.approve(pancakeProfile.address, constants.MAX_UINT256, { from: user });
       await mockCake.approve(nftSale.address, constants.MAX_UINT256, { from: user });
-      await pancakeProfile.createProfile("1", mockPancakeBunnies.address, i.toString(), { from: user });
+      await pancakeProfile.createProfile("1", mockMieBunnies.address, i.toString(), { from: user });
       i++;
     }
 
     // Change sale contract from the VRF
     await mockVRF.changeNFTSaleContract(nftSale.address, { from: owner });
 
-    // Transfer owner of the PancakeSquad
+    // Transfer owner of the MieSquad
     await pancakeSquad.transferOwnership(nftSale.address, { from: owner });
 
     mockURI = "ipfs://qwertyuiop/";
@@ -460,7 +460,7 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
     });
 
     it("Cannot change ownership outside of the claim phase", async () => {
-      await expectRevert(nftSale.changeOwnershipPancakeSquad(owner, { from: owner }), "Status: Must be in claim");
+      await expectRevert(nftSale.changeOwnershipMieSquad(owner, { from: owner }), "Status: Must be in claim");
     });
 
     it("Admin draws randomness", async () => {
@@ -643,7 +643,7 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
 
     it("Cannot change ownership unless all tickets are used to mint", async () => {
       await expectRevert(
-        nftSale.changeOwnershipPancakeSquad(owner, { from: owner }),
+        nftSale.changeOwnershipMieSquad(owner, { from: owner }),
         "Operations: All tokens must be minted"
       );
     });
@@ -701,8 +701,8 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
       expectEvent.inTransaction(result.receipt.transactionHash, pancakeSquad, "Lock");
     });
 
-    it("Owner can transfer the ownership of PancakeSquad", async () => {
-      const result = await nftSale.changeOwnershipPancakeSquad(owner, { from: owner });
+    it("Owner can transfer the ownership of MieSquad", async () => {
+      const result = await nftSale.changeOwnershipMieSquad(owner, { from: owner });
 
       expectEvent.inTransaction(result.receipt.transactionHash, pancakeSquad, "OwnershipTransferred", {
         previousOwner: nftSale.address,
@@ -792,7 +792,7 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
       await expectRevert(nftSale.recoverToken(mockCake.address, { from: owner }), "Operations: Cannot recover CAKE");
     });
 
-    it("Owner can recover token from PancakeSquad", async () => {
+    it("Owner can recover token from MieSquad", async () => {
       await fakeCake.transfer(pancakeSquad.address, parseEther("100"), { from: david });
 
       const result = await pancakeSquad.recoverToken(fakeCake.address, { from: owner });
@@ -809,7 +809,7 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
       });
     });
 
-    it("Owner cannot recover token if balance is zero from PancakeSquad", async () => {
+    it("Owner cannot recover token if balance is zero from MieSquad", async () => {
       await expectRevert(
         pancakeSquad.recoverToken(fakeCake.address, { from: owner }),
         "Operations: Cannot recover zero balance"
@@ -832,12 +832,12 @@ contract("Pancake Squad", ([owner, operator, alice, bob, carol, david, erin]) =>
     it("Owner functions can only be called by the owner for NFTSale", async () => {
       for (let user of [alice, operator]) {
         await expectRevert(
-          nftSale.changeOwnershipPancakeSquad(alice, { from: user }),
+          nftSale.changeOwnershipMieSquad(alice, { from: user }),
           "Ownable: caller is not the owner"
         );
 
         await expectRevert(
-          nftSale.changeOwnershipPancakeSquad(alice, { from: user }),
+          nftSale.changeOwnershipMieSquad(alice, { from: user }),
           "Ownable: caller is not the owner"
         );
 

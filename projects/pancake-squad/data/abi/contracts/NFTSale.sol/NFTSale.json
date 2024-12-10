@@ -334,7 +334,7 @@
         "type": "address"
       }
     ],
-    "name": "changeOwnershipPancakeSquad",
+    "name": "changeOwnershipMieSquad",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -559,7 +559,7 @@
     "name": "pancakeProfile",
     "outputs": [
       {
-        "internalType": "contract IPancakeProfile",
+        "internalType": "contract IMieProfile",
         "name": "",
         "type": "address"
       }
@@ -572,7 +572,7 @@
     "name": "pancakeSquad",
     "outputs": [
       {
-        "internalType": "contract PancakeSquad",
+        "internalType": "contract MieSquad",
         "name": "",
         "type": "address"
       }

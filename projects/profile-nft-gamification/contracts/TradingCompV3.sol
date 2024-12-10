@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721Holder.sol";
 import "bsc-library/contracts/IBEP20.sol";
 import "bsc-library/contracts/SafeBEP20.sol";
 
-import "./interfaces/IPancakeProfile.sol";
+import "./interfaces/IMieProfile.sol";
 import "./BunnyMintingStation.sol";
 
 /** @title TradingCompV3.
@@ -24,7 +24,7 @@ contract TradingCompV3 is Ownable, ERC721Holder {
     IBEP20 public immutable moboxMisteryBoxToken;
     IERC721Enumerable public moboxAvatarNFTCollection;
 
-    IPancakeProfile public immutable pancakeProfile;
+    IMieProfile public immutable pancakeProfile;
 
     uint256 public constant numberTeams = 3;
 
@@ -71,7 +71,7 @@ contract TradingCompV3 is Ownable, ERC721Holder {
 
     /**
      * @notice It initializes the contract.
-     * @param _pancakeProfileAddress: PancakeProfile address
+     * @param _pancakeProfileAddress: MieProfile address
      * @param _bunnyStationAddress: BunnyMintingStation address
      * @param _cakeTokenAddress: the address of the CAKE token
      * @param _moboxTokenAddress: the address of the MOBOX token
@@ -86,7 +86,7 @@ contract TradingCompV3 is Ownable, ERC721Holder {
         address _moboxMisteryBoxTokenAddress,
         uint256 _competitionId
     ) public {
-        pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
+        pancakeProfile = IMieProfile(_pancakeProfileAddress);
         bunnyMintingStation = BunnyMintingStation(_bunnyStationAddress);
         cakeToken = IBEP20(_cakeTokenAddress);
         moboxToken = IBEP20(_moboxTokenAddress);
@@ -153,7 +153,7 @@ contract TradingCompV3 is Ownable, ERC721Holder {
 
     /**
      * @notice It allows users to register for trading competition
-     * @dev Only callable if the user has an active PancakeProfile.
+     * @dev Only callable if the user has an active MieProfile.
      */
     function register() external {
         address senderAddress = _msgSender();
@@ -292,10 +292,10 @@ contract TradingCompV3 is Ownable, ERC721Holder {
      * @param _addressesToUpdate: the array of addresses
      * @param _canClaimMysteryBox: flag for mystery box
      */
-    function updateUserStatusMysteryBox(address[] calldata _addressesToUpdate, bool _canClaimMysteryBox)
-        external
-        onlyOwner
-    {
+    function updateUserStatusMysteryBox(
+        address[] calldata _addressesToUpdate,
+        bool _canClaimMysteryBox
+    ) external onlyOwner {
         require(currentStatus == CompetitionStatus.Close, "NOT_CLOSED");
         for (uint256 i = 0; i < _addressesToUpdate.length; i++) {
             userTradingStats[_addressesToUpdate[i]].canClaimMysteryBox = _canClaimMysteryBox;
@@ -339,21 +339,9 @@ contract TradingCompV3 is Ownable, ERC721Holder {
      * @return canClaimMysteryBox: whether the user gets/got a mystery box
      * @return canClaimNFT: whether the user gets/got a NFT
      */
-    function claimInformation(address _userAddress)
-        external
-        view
-        returns (
-            bool,
-            bool,
-            bool,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            bool,
-            bool
-        )
-    {
+    function claimInformation(
+        address _userAddress
+    ) external view returns (bool, bool, bool, uint256, uint256, uint256, uint256, bool, bool) {
         bool isUserActive;
         (, , , , , isUserActive) = pancakeProfile.getUserProfile(_userAddress);
         UserStats memory userStats = userTradingStats[_userAddress];

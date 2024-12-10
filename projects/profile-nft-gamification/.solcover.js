@@ -4,7 +4,7 @@
 
 module.exports = {
   skipFiles: [
-    "IPancakeProfile.sol",
+    "IMieProfile.sol",
     "test/CakeToken.sol",
     "test/MasterChef.sol",
     "test/SyrupBar.sol",

@@ -23,9 +23,9 @@ contract SmartChefFactory is Ownable {
      * @param _endBlock: end block
      * @param _poolLimitPerUser: pool limit per user in stakedToken (if any, else 0)
      * @param _numberBlocksForUserLimit: block numbers available for user limit (after start block)
-     * @param _pancakeProfile: Pancake Profile address
-     * @param _pancakeProfileIsRequested: Pancake Profile is requested
-     * @param _pancakeProfileThresholdPoints: Pancake Profile need threshold points
+     * @param _pancakeProfile: Mie Profile address
+     * @param _pancakeProfileIsRequested: Mie Profile is requested
+     * @param _pancakeProfileThresholdPoints: Mie Profile need threshold points
      * @param _admin: admin address with ownership
      * @return address of new smart chef contract
      */

@@ -258,7 +258,7 @@
     "name": "pancakeBunnies",
     "outputs": [
       {
-        "internalType": "contract PancakeBunnies",
+        "internalType": "contract MieBunnies",
         "name": "",
         "type": "address"
       }

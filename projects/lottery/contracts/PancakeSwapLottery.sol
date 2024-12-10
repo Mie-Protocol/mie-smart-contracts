@@ -7,13 +7,13 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "./interfaces/IRandomNumberGenerator.sol";
-import "./interfaces/IPancakeSwapLottery.sol";
+import "./interfaces/IMieSwapLottery.sol";
 
-/** @title PancakeSwap Lottery.
+/** @title MieSwap Lottery.
  * @notice It is a contract for a lottery system using
  * randomness provided externally.
  */
-contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
+contract MieSwapLottery is ReentrancyGuard, IMieSwapLottery, Ownable {
     using SafeERC20 for IERC20;
 
     address public injectorAddress;
@@ -137,12 +137,10 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
      * @param _ticketNumbers: array of ticket numbers between 1,000,000 and 1,999,999
      * @dev Callable by users
      */
-    function buyTickets(uint256 _lotteryId, uint32[] calldata _ticketNumbers)
-        external
-        override
-        notContract
-        nonReentrant
-    {
+    function buyTickets(
+        uint256 _lotteryId,
+        uint32[] calldata _ticketNumbers
+    ) external override notContract nonReentrant {
         require(_ticketNumbers.length != 0, "No ticket specified");
         require(_ticketNumbers.length <= maxNumberTicketsPerBuyOrClaim, "Too many tickets");
 
@@ -263,12 +261,10 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
      * @param _autoInjection: reinjects funds into next lottery (vs. withdrawing all)
      * @dev Callable by operator
      */
-    function drawFinalNumberAndMakeLotteryClaimable(uint256 _lotteryId, bool _autoInjection)
-        external
-        override
-        onlyOperator
-        nonReentrant
-    {
+    function drawFinalNumberAndMakeLotteryClaimable(
+        uint256 _lotteryId,
+        bool _autoInjection
+    ) external override onlyOperator nonReentrant {
         require(_lotteries[_lotteryId].status == Status.Close, "Lottery not close");
         require(_lotteryId == randomGenerator.viewLatestLotteryId(), "Numbers not drawn");
 
@@ -289,7 +285,7 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
         // Calculate prizes in CAKE for each bracket by starting from the highest one
         for (uint32 i = 0; i < 6; i++) {
             uint32 j = 5 - i;
-            uint32 transformedWinningNumber = _bracketCalculator[j] + (finalNumber % (uint32(10)**(j + 1)));
+            uint32 transformedWinningNumber = _bracketCalculator[j] + (finalNumber % (uint32(10) ** (j + 1)));
 
             _lotteries[_lotteryId].countWinnersPerBracket[j] =
                 _numberTicketsPerLotteryId[_lotteryId][transformedWinningNumber] -
@@ -473,10 +469,10 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
      * @param _minPriceTicketInCake: minimum price of a ticket in CAKE
      * @param _maxPriceTicketInCake: maximum price of a ticket in CAKE
      */
-    function setMinAndMaxTicketPriceInCake(uint256 _minPriceTicketInCake, uint256 _maxPriceTicketInCake)
-        external
-        onlyOwner
-    {
+    function setMinAndMaxTicketPriceInCake(
+        uint256 _minPriceTicketInCake,
+        uint256 _maxPriceTicketInCake
+    ) external onlyOwner {
         require(_minPriceTicketInCake <= _maxPriceTicketInCake, "minPrice must be < maxPrice");
 
         minPriceTicketInCake = _minPriceTicketInCake;
@@ -551,11 +547,9 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
      * @notice View ticker statuses and numbers for an array of ticket ids
      * @param _ticketIds: array of _ticketId
      */
-    function viewNumbersAndStatusesForTicketIds(uint256[] calldata _ticketIds)
-        external
-        view
-        returns (uint32[] memory, bool[] memory)
-    {
+    function viewNumbersAndStatusesForTicketIds(
+        uint256[] calldata _ticketIds
+    ) external view returns (uint32[] memory, bool[] memory) {
         uint256 length = _ticketIds.length;
         uint32[] memory ticketNumbers = new uint32[](length);
         bool[] memory ticketStatuses = new bool[](length);
@@ -612,17 +606,7 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
         uint256 _lotteryId,
         uint256 _cursor,
         uint256 _size
-    )
-        external
-        view
-        override
-        returns (
-            uint256[] memory,
-            uint32[] memory,
-            bool[] memory,
-            uint256
-        )
-    {
+    ) external view override returns (uint256[] memory, uint32[] memory, bool[] memory, uint256) {
         uint256 length = _size;
         uint256 numberTicketsBoughtAtLotteryId = _userTicketIdsPerLotteryId[_user][_lotteryId].length;
 
@@ -669,9 +653,9 @@ contract PancakeSwapLottery is ReentrancyGuard, IPancakeSwapLottery, Ownable {
 
         // Apply transformation to verify the claim provided by the user is true
         uint32 transformedWinningNumber = _bracketCalculator[_bracket] +
-            (winningTicketNumber % (uint32(10)**(_bracket + 1)));
+            (winningTicketNumber % (uint32(10) ** (_bracket + 1)));
 
-        uint32 transformedUserNumber = _bracketCalculator[_bracket] + (userNumber % (uint32(10)**(_bracket + 1)));
+        uint32 transformedUserNumber = _bracketCalculator[_bracket] + (userNumber % (uint32(10) ** (_bracket + 1)));
 
         // Confirm that the two transformed numbers are the same, if not throw
         if (transformedWinningNumber == transformedUserNumber) {

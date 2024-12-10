@@ -7,7 +7,7 @@ import { BN, expectEvent, expectRevert, time, ether } from "@openzeppelin/test-h
 const IFOInitializableV3 = artifacts.require("./IFOInitializableV3.sol");
 const IFODeployerV3 = artifacts.require("./IFODeployerV3.sol");
 
-const PancakeProfile = artifacts.require("profile-nft-gamification/contracts/PancakeProfile.sol");
+const MieProfile = artifacts.require("profile-nft-gamification/contracts/MieProfile.sol");
 const MockBEP20 = artifacts.require("./utils/MockBEP20.sol");
 const MockERC20 = artifacts.require("./utils/MockERC20.sol");
 const MockBunnies = artifacts.require("./utils/MockBunnies.sol");
@@ -20,7 +20,7 @@ const IFOPool = artifacts.require("cake-vault/contracts/IFOPool.sol");
 const REWARDS_START_BLOCK = 100;
 
 contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]) => {
-  // PancakeProfile
+  // MieProfile
   const _totalInitSupply = parseEther("5000000"); // 50 CAKE
   const _numberCakeToReactivate = parseEther("5"); // 5 CAKE
   const _numberCakeToRegister = parseEther("5"); // 5 CAKE
@@ -64,7 +64,7 @@ contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]
     masterchef,
     rewardsStartBlock;
 
-  // Roles in PancakeProfile
+  // Roles in MieProfile
   let DEFAULT_ADMIN_ROLE, NFT_ROLE, POINT_ROLE;
   // Generic result variable
   let result;
@@ -86,8 +86,8 @@ contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]
     // Deploy Mock Bunnies
     mockBunnies = await MockBunnies.new({ from: alice });
 
-    // Deploy Pancake Profile
-    pancakeProfile = await PancakeProfile.new(
+    // Deploy Mie Profile
+    pancakeProfile = await MieProfile.new(
       mockCake.address,
       _numberCakeToReactivate,
       _numberCakeToRegister,
@@ -131,7 +131,7 @@ contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]
   });
 
   describe("Initial contract parameters for all contracts", async () => {
-    it("PancakeProfile is correct", async () => {
+    it("MieProfile is correct", async () => {
       assert.equal(await pancakeProfile.cakeToken(), mockCake.address);
       assert.equal(String(await pancakeProfile.numberCakeToReactivate()), String(_numberCakeToReactivate));
       assert.equal(String(await pancakeProfile.numberCakeToRegister()), String(_numberCakeToRegister));
@@ -167,7 +167,7 @@ contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]
           from: thisUser,
         });
 
-        // Approves CAKE to be spent by PancakeProfile
+        // Approves CAKE to be spent by MieProfile
         await mockCake.approve(pancakeProfile.address, parseEther("100"), {
           from: thisUser,
         });
@@ -195,7 +195,7 @@ contract("IFO DeployerV3", ([alice, bob, carol, david, erin, frank, ...accounts]
           from: thisUser,
         });
 
-        // Approves CAKE to be spent by PancakeProfile
+        // Approves CAKE to be spent by MieProfile
         await mockCake.approve(pancakeProfile.address, parseEther("100"), {
           from: thisUser,
         });

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "pancake-cake-vault/contracts/CakeVault.sol";
 
 import "./BunnyMintingStation.sol";
-import "./PancakeProfile.sol";
+import "./MieProfile.sol";
 
 /**
  * @title BunnySpecialCakeVault.
@@ -18,7 +18,7 @@ contract BunnySpecialCakeVault is Ownable {
 
     BunnyMintingStation public bunnyMintingStation;
     CakeVault public cakeVault;
-    PancakeProfile public pancakeProfile;
+    MieProfile public pancakeProfile;
 
     uint8 public constant bunnyId = 16;
 
@@ -26,7 +26,7 @@ contract BunnySpecialCakeVault is Ownable {
     uint256 public endBlock;
     uint256 public thresholdTimestamp;
 
-    // PancakeSwap Profile related.
+    // MieSwap Profile related.
     uint256 public numberPoints;
     uint256 public campaignId;
 
@@ -53,7 +53,7 @@ contract BunnySpecialCakeVault is Ownable {
     ) public {
         cakeVault = CakeVault(_cakeVault);
         bunnyMintingStation = BunnyMintingStation(_bunnyMintingStation);
-        pancakeProfile = PancakeProfile(_pancakeProfile);
+        pancakeProfile = MieProfile(_pancakeProfile);
         endBlock = _endBlock;
         thresholdTimestamp = _thresholdTimestamp;
         numberPoints = _numberPoints;
@@ -87,14 +87,14 @@ contract BunnySpecialCakeVault is Ownable {
         // Mint collectible and send it to the user.
         uint256 tokenId = bunnyMintingStation.mintCollectible(msg.sender, tokenURI, bunnyId);
 
-        // Increase point on PancakeSwap profile, for a given campaignId.
+        // Increase point on MieSwap profile, for a given campaignId.
         pancakeProfile.increaseUserPoints(msg.sender, numberPoints, campaignId);
 
         emit BunnyMint(msg.sender, tokenId, bunnyId);
     }
 
     /**
-     * @notice Change the campaignId for PancakeSwap Profile.
+     * @notice Change the campaignId for MieSwap Profile.
      * @dev Only callable by owner.
      */
     function changeCampaignId(uint256 _campaignId) external onlyOwner {
@@ -114,7 +114,7 @@ contract BunnySpecialCakeVault is Ownable {
     }
 
     /**
-     * @notice Change the number of points for PancakeSwap Profile.
+     * @notice Change the number of points for MieSwap Profile.
      * @dev Only callable by owner.
      */
     function changeNumberPoints(uint256 _numberPoints) external onlyOwner {

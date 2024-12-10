@@ -10,7 +10,7 @@ const SmartChefFactory = artifacts.require("./SmartChefFactory");
 const SmartChefInitializable = artifacts.require("./SmartChefInitializable");
 const MockERC20 = artifacts.require("./test/MockERC20");
 const MockERC721 = artifacts.require("./test/MockERC721");
-const PancakeProfile = artifacts.require("./test/MockPancakeProfile");
+const MieProfile = artifacts.require("./test/MockMieProfile");
 
 contract("Smart Chef Pool Limit Per User", ([alice, bob, carol, david, erin, ...accounts]) => {
   let blockNumber;
@@ -22,7 +22,7 @@ contract("Smart Chef Pool Limit Per User", ([alice, bob, carol, david, erin, ...
   let rewardPerBlock = parseEther("10");
 
   // Contracts
-  let fakeCake, mockCAKE, mockPT, smartChef, smartChefFactory, mockPancakeBunnies, pancakeProfile;
+  let fakeCake, mockCAKE, mockPT, smartChef, smartChefFactory, mockMieBunnies, pancakeProfile;
   let DEFAULT_ADMIN_ROLE, NFT_ROLE, POINT_ROLE, SPECIAL_ROLE;
 
   // Generic result variable
@@ -46,14 +46,14 @@ contract("Smart Chef Pool Limit Per User", ([alice, bob, carol, david, erin, ...
 
     smartChefFactory = await SmartChefFactory.new({ from: alice });
 
-    // Pancake Bunnies / Profile setup
-    mockPancakeBunnies = await MockERC721.new("Pancake Bunnies", "PB", { from: alice });
-    pancakeProfile = await PancakeProfile.new(mockCAKE.address, parseEther("2"), parseEther("1"), parseEther("2"), {
+    // Mie Bunnies / Profile setup
+    mockMieBunnies = await MockERC721.new("Mie Bunnies", "PB", { from: alice });
+    pancakeProfile = await MieProfile.new(mockCAKE.address, parseEther("2"), parseEther("1"), parseEther("2"), {
       from: alice,
     });
 
     await pancakeProfile.addTeam("1st Team", "Be a Chef!", { from: alice });
-    await pancakeProfile.addNftAddress(mockPancakeBunnies.address, { from: alice });
+    await pancakeProfile.addNftAddress(mockMieBunnies.address, { from: alice });
 
     DEFAULT_ADMIN_ROLE = await pancakeProfile.DEFAULT_ADMIN_ROLE();
     NFT_ROLE = await pancakeProfile.NFT_ROLE();
@@ -101,10 +101,10 @@ contract("Smart Chef Pool Limit Per User", ([alice, bob, carol, david, erin, ...
       await mockCAKE.approve(smartChef.address, parseEther("1000"), {
         from: bob,
       });
-      await mockPancakeBunnies.mint({ from: bob });
-      await mockPancakeBunnies.setApprovalForAll(pancakeProfile.address, true, { from: bob });
+      await mockMieBunnies.mint({ from: bob });
+      await mockMieBunnies.setApprovalForAll(pancakeProfile.address, true, { from: bob });
       await mockCAKE.approve(pancakeProfile.address, constants.MAX_UINT256, { from: bob });
-      await pancakeProfile.createProfile("1", mockPancakeBunnies.address, "0", { from: bob });
+      await pancakeProfile.createProfile("1", mockMieBunnies.address, "0", { from: bob });
       await expectRevert(
         smartChef.deposit(parseEther("0"), { from: bob }),
         "Deposit: User is not get enough user points"

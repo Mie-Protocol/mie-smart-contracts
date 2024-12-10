@@ -2,14 +2,14 @@
 pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../PancakeProfile.sol";
+import "../MieProfile.sol";
 
 /** @title MockAdmin.
  * @notice It is a mock contract to test point roles
- * for PancakeProfile.
+ * for MieProfile.
  */
 contract MockAdmin is Ownable {
-    PancakeProfile pancakeProfile;
+    MieProfile pancakeProfile;
     address public pancakeProfileAddress;
 
     mapping(address => bool) public hasReceivedPoints;
@@ -22,7 +22,7 @@ contract MockAdmin is Ownable {
 
     constructor(address _pancakeProfileAddress) public {
         pancakeProfileAddress = _pancakeProfileAddress;
-        pancakeProfile = PancakeProfile(pancakeProfileAddress);
+        pancakeProfile = MieProfile(pancakeProfileAddress);
         numberFreePoints = 88;
         campaignId1 = 711012101;
         campaignId2 = 811012101;

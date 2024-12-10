@@ -1,10 +1,10 @@
 module.exports = {
   skipFiles: [
-    "interfaces/IPancakeBunnies.sol",
+    "interfaces/IMieBunnies.sol",
     "interfaces/IWETH.sol",
     "test/MockERC20.sol",
     "test/MockNFT.sol",
-    "test/PancakeBunnies.sol",
+    "test/MieBunnies.sol",
     "test/WBNB.sol",
   ],
   measureStatementCoverage: true,

@@ -1,9 +1,9 @@
 module.exports = {
   skipFiles: [
-    "interfaces/IPancakeProfile.sol",
+    "interfaces/IMieProfile.sol",
     "test/MockERC20.sol",
     "test/MockERC721.sol",
-    "test/MockPancakeProfile.sol",
+    "test/MockMieProfile.sol",
   ],
   measureStatementCoverage: true,
   measureFunctionCoverage: true,

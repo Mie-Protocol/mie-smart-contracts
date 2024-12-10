@@ -2,14 +2,14 @@
 pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
-import "./PancakeBunnies.sol";
+import "./MieBunnies.sol";
 
 /** @title BunnyMintingStation.
  * @dev This contract allows different factories to mint
- * Pancake Collectibles/Bunnies.
+ * Mie Collectibles/Bunnies.
  */
 contract BunnyMintingStation is AccessControl {
-    PancakeBunnies public pancakeBunnies;
+    MieBunnies public pancakeBunnies;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
@@ -25,13 +25,13 @@ contract BunnyMintingStation is AccessControl {
         _;
     }
 
-    constructor(PancakeBunnies _pancakeBunnies) public {
+    constructor(MieBunnies _pancakeBunnies) public {
         pancakeBunnies = _pancakeBunnies;
         _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     }
 
     /**
-     * @notice Mint NFTs from the PancakeBunnies contract.
+     * @notice Mint NFTs from the MieBunnies contract.
      * Users can specify what bunnyId they want to mint. Users can claim once.
      * There is a limit on how many are distributed. It requires CAKE balance to be > 0.
      */
